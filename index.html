@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Colten Hargett</title>
+  <meta name="description" content="Colten Hargett — programming and AI portfolio." />
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+  <link rel="stylesheet" href="./styles.css?v=5" />
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- top scroll progress (subtle) -->
+  <div class="top-progress" aria-hidden="true">
+    <span class="top-progress-bar" id="topProgress"></span>
+  </div>
+
+  <!-- cursor spotlight (soft, optional) -->
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+  <header class="nav" id="siteHeader">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-text">Colten Hargett</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#featured">Featured</a>
+        <a href="#work">Work</a>
+        <a href="#approach">Approach</a>
+        <a class="pill mag" href="#contact">Contact</a>
+      </nav>
+
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">
+        Menu
+      </button>
+    </div>
+
+    <div class="mobile" id="mobileMenu" hidden>
+      <div class="wrap mobile-inner">
+        <a href="#featured" class="m-link">Featured</a>
+        <a href="#work" class="m-link">Work</a>
+        <a href="#approach" class="m-link">Approach</a>
+        <a href="#contact" class="m-link m-pill">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="kicker reveal">Portfolio</p>
+
+          <h1 class="h1 reveal">
+            Software that feels
+            <span class="grad">inevitable</span>.
+          </h1>
+
+          <p class="lead reveal">
+            Programming + AI projects built with clarity, reliability, and finish.
+          </p>
+
+          <div class="actions reveal">
+            <a class="btn mag" href="#featured">Explore</a>
+            <a class="btn ghost mag" href="./resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          </div>
+
+          <div class="meta reveal">
+            <a href="mailto:coltenhargett@gmail.com">coltenhargett@gmail.com</a>
+            <span class="dot" aria-hidden="true"></span>
+            <a href="https://www.linkedin.com/in/colten-hargett" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+
+          <p class="note muted reveal">
+            Some work is private to protect coursework. I can share code, demos, or walkthroughs on request.
+          </p>
+        </div>
+
+        <!-- orb -->
+        <aside class="orb-wrap reveal" aria-label="Interactive orb">
+          <div class="orb" id="orb">
+            <div class="orb-sheen" aria-hidden="true"></div>
+            <div class="orb-core" aria-hidden="true"></div>
+          </div>
+          <p class="orb-caption">Cursor-reactive orb. No images.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="section featured" id="featured" aria-label="Featured projects">
+      <div class="wrap">
+        <header class="head reveal">
+          <h2 class="h2">Featured</h2>
+          <p class="muted">The work I’d show first in an interview.</p>
+        </header>
+
+        <div class="featured-grid">
+          <article class="feature reveal tilt">
+            <div class="feature-top">
+              <p class="feature-k">Featured project</p>
+              <h3 class="feature-h">Intelligent Course Planner</h3>
+              <p class="feature-p">
+                A planning tool that maps requirements into a clean, usable path—with guardrails.
+              </p>
+            </div>
+
+            <div class="feature-row">
+              <span class="tag">Python</span>
+              <span class="tag">Constraints</span>
+              <span class="tag">Automation</span>
+            </div>
+
+            <div class="feature-actions">
+              <a class="btn small mag" href="#work">See writeup</a>
+              <a class="btn small ghost mag"
+                 href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Intelligent%20Course%20Planner">
+                Request code
+              </a>
+            </div>
+          </article>
+
+          <article class="feature reveal tilt">
+            <div class="feature-top">
+              <p class="feature-k">Featured project</p>
+              <h3 class="feature-h">Market Tracker Prototype</h3>
+              <p class="feature-p">
+                Reliable fetch → parse → normalize → summarize pipeline designed for real-world messiness.
+              </p>
+            </div>
+
+            <div class="feature-row">
+              <span class="tag">Python</span>
+              <span class="tag">APIs</span>
+              <span class="tag">Data</span>
+            </div>
+
+            <div class="feature-actions">
+              <a class="btn small mag" href="#work">See writeup</a>
+              <a class="btn small ghost mag"
+                 href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Market%20Tracker">
+                Request code
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK (Folders / Collections) -->
+    <section class="section" id="work" aria-label="Project collections">
+      <div class="wrap">
+        <header class="head reveal">
+          <h2 class="h2">Work</h2>
+          <p class="muted">Organized into collections. Open a folder to browse.</p>
+        </header>
+
+        <div class="folders">
+          <details class="folder reveal" id="collection-automation">
+            <summary class="folder-head">
+              <div class="folder-left">
+                <span class="folder-icon" aria-hidden="true">⌘</span>
+                <div>
+                  <p class="folder-title">Automation & Tools</p>
+                  <p class="folder-sub">Systems that make work faster and cleaner.</p>
+                </div>
+              </div>
+              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+            </summary>
+
+            <div class="folder-body">
+              <div class="cards">
+                <article class="card tilt">
+                  <h3 class="h3">Intelligent Course Planner</h3>
+                  <p class="sub">Constraint-based planner that outputs usable paths.</p>
+                  <ul class="bullets">
+                    <li>Transforms requirements into a structured plan with guardrails.</li>
+                    <li>Handles conflicts, partial completion, and “no valid path” cases.</li>
+                    <li>Built for iteration—update inputs and regenerate predictably.</li>
+                  </ul>
+                  <div class="row">
+                    <span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Logic</span>
+                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Intelligent%20Course%20Planner">Code on request</a>
+                  </div>
+                </article>
+
+                <article class="card tilt">
+                  <h3 class="h3">Email Importance Scorer</h3>
+                  <p class="sub">A scoring system for prioritizing messages with confidence.</p>
+                  <ul class="bullets">
+                    <li>Ranks items 1–10 with confidence for later visualization.</li>
+                    <li>Logs JSON for analysis and improvement over time.</li>
+                    <li>Designed to accept feedback to refine scoring.</li>
+                  </ul>
+                  <div class="row">
+                    <span class="tag">AI</span><span class="tag">Scoring</span><span class="tag">JSON</span>
+                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Email%20Scorer">Code on request</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </details>
+
+          <details class="folder reveal" id="collection-data">
+            <summary class="folder-head">
+              <div class="folder-left">
+                <span class="folder-icon" aria-hidden="true">◉</span>
+                <div>
+                  <p class="folder-title">Data & Pipelines</p>
+                  <p class="folder-sub">Fetch, parse, normalize, and summarize.</p>
+                </div>
+              </div>
+              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+            </summary>
+
+            <div class="folder-body">
+              <div class="cards">
+                <article class="card tilt">
+                  <h3 class="h3">Market Tracker Prototype</h3>
+                  <p class="sub">A resilient pipeline for reliable outputs.</p>
+                  <ul class="bullets">
+                    <li>Defensive parsing to handle inconsistent upstream formats.</li>
+                    <li>Normalization layer to keep comparisons meaningful.</li>
+                    <li>Summaries optimized for scanning: what changed and why.</li>
+                  </ul>
+                  <div class="row">
+                    <span class="tag">Python</span><span class="tag">APIs</span><span class="tag">Data</span>
+                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Market%20Tracker">Code on request</a>
+                  </div>
+                </article>
+
+                <article class="card tilt">
+                  <h3 class="h3">Text Analyzer</h3>
+                  <p class="sub">Fast parsing + analysis over large files.</p>
+                  <ul class="bullets">
+                    <li>Efficient scanning for patterns and counts without heavy memory use.</li>
+                    <li>Clear output formatting for quick interpretation.</li>
+                    <li>Built as reusable functions for different datasets.</li>
+                  </ul>
+                  <div class="row">
+                    <span class="tag">Parsing</span><span class="tag">Performance</span><span class="tag">CLI</span>
+                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Text%20Analyzer">Code on request</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </details>
+
+          <details class="folder reveal" id="collection-web">
+            <summary class="folder-head">
+              <div class="folder-left">
+                <span class="folder-icon" aria-hidden="true">▢</span>
+                <div>
+                  <p class="folder-title">Web & Presentation</p>
+                  <p class="folder-sub">Minimal interfaces with polish.</p>
+                </div>
+              </div>
+              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+            </summary>
+
+            <div class="folder-body">
+              <div class="cards">
+                <article class="card tilt">
+                  <h3 class="h3">Portfolio System</h3>
+                  <p class="sub">Apple-like narrative + motion without frameworks.</p>
+                  <ul class="bullets">
+                    <li>Folders/collections layout + featured section.</li>
+                    <li>Sticky story that updates only when content is readable.</li>
+                    <li>Accessibility + reduced-motion support.</li>
+                  </ul>
+                  <div class="row">
+                    <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+                    <a class="mini mag" href="#approach">See approach</a>
+                  </div>
+                </article>
+
+                <article class="card tilt">
+                  <h3 class="h3">Photo Essay Site</h3>
+                  <p class="sub">A minimal, elegant storytelling layout.</p>
+                  <ul class="bullets">
+                    <li>Typography-first composition for readability.</li>
+                    <li>Responsive layout with smooth content pacing.</li>
+                    <li>Designed to be edited quickly without layout breakage.</li>
+                  </ul>
+                  <div class="row">
+                    <span class="tag">Design</span><span class="tag">Layout</span><span class="tag">Story</span>
+                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Demo%20Request%20-%20Photo%20Essay%20Site">Demo on request</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <p class="muted note reveal">
+          Tip: link directly to a collection like <span class="mono">#collection-data</span>.
+        </p>
+      </div>
+    </section>
+
+    <!-- APPROACH -->
+    <section class="section soft" id="approach">
+      <div class="wrap">
+        <header class="head reveal">
+          <h2 class="h2">Approach</h2>
+          <p class="muted">Scroll. The page tells the story.</p>
+        </header>
+
+        <div class="story-shell">
+          <div class="story-left">
+            <div class="progress">
+              <span class="progress-bar" id="progressBar"></span>
+            </div>
+
+            <div class="story-stage reveal" id="storyStage">
+              <div class="stage-card">
+                <p class="stage-kicker" id="stageKicker">Clarity</p>
+                <p class="stage-title" id="stageTitle">Readable systems.</p>
+                <p class="stage-body" id="stageBody">
+                  I design for understanding first—clean data flow, stable interfaces, predictable outputs.
+                </p>
+              </div>
+              <div class="stage-glow" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="story-right" id="storySteps">
+            <article class="step reveal"
+              data-kicker="Clarity"
+              data-title="Readable systems."
+              data-body="I design for understanding first—clean data flow, stable interfaces, predictable outputs.">
+              <h3>Clarity</h3>
+              <p>Readable code, simple structure, outputs that make sense without explanation.</p>
+            </article>
+
+            <article class="step reveal"
+              data-kicker="Reliability"
+              data-title="Defensive by default."
+              data-body="I assume inputs can be messy. I validate, normalize, and fail in useful ways.">
+              <h3>Reliability</h3>
+              <p>Defensive parsing, safe defaults, useful errors—no silent failures.</p>
+            </article>
+
+            <article class="step reveal"
+              data-kicker="Finish"
+              data-title="Small details matter."
+              data-body="Polish is not decoration. It's what makes tools feel trustworthy and intentional.">
+              <h3>Finish</h3>
+              <p>Spacing, naming, UI behavior, edge-case handling—the final 10%.</p>
+            </article>
+
+            <article class="step reveal"
+              data-kicker="AI"
+              data-title="AI that improves usefulness."
+              data-body="I like AI when it removes friction: smarter organization, better summaries, better decisions.">
+              <h3>AI (when it helps)</h3>
+              <p>Practical intelligence only. Not “AI for AI’s sake.”</p>
+            </article>
+          </div>
+        </div>
+
+        <p class="note muted reveal">
+          Some projects are private to protect coursework. I can share code, demos, or walkthroughs on request.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="wrap">
+        <header class="head reveal">
+          <h2 class="h2">Contact</h2>
+          <p class="muted">Best way to reach me.</p>
+        </header>
+
+        <div class="contact reveal">
+          <a class="c-card mag" href="mailto:coltenhargett@gmail.com">
+            <div>
+              <p class="label">Email</p>
+              <p class="value">coltenhargett@gmail.com</p>
+            </div>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+
+          <a class="c-card mag" href="https://www.linkedin.com/in/colten-hargett" target="_blank" rel="noreferrer">
+            <div>
+              <p class="label">LinkedIn</p>
+              <p class="value">colten-hargett</p>
+            </div>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+
+          <a class="c-card mag" href="./resume.pdf" target="_blank" rel="noreferrer">
+            <div>
+              <p class="label">Resume</p>
+              <p class="value">resume.pdf</p>
+            </div>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <footer class="footer">
+          <p class="muted small">© <span id="year"></span> Colten Hargett</p>
+          <a class="muted small" href="#top">Back to top</a>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="./script.js?v=5" defer></script>
+</body>
+</html>
