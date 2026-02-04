@@ -435,9 +435,10 @@ async function loadProjects() {
     foldersRoot.innerHTML = collections.map(renderCollectionDetails).join("") || `<p class="muted">No collections yet.</p>`;
 
     // Re-bind tilt/magnet behavior for newly injected elements
-    tiltCards();
-    magneticButtons();
-    magneticFolders();
+    revealOnScroll();   // re-observe the newly created .reveal elements
+    tiltCards();        // re-bind tilt for newly created cards
+    magneticFolders();  // re-bind magnetic folder motion
+    magneticButtons();  // re-bind magnetic buttons
 
   }   } catch (err) {
     const msg = escapeHtml(err?.message || String(err));
