@@ -439,10 +439,22 @@ async function loadProjects() {
     magneticButtons();
     magneticFolders();
 
-  } catch (err) {
+  }   } catch (err) {
     const msg = escapeHtml(err?.message || String(err));
-    featuredGrid.innerHTML = `<p class="muted">Could not load projects.json: ${msg}</p>`;
-    foldersRoot.innerHTML = `<p class="muted">Fix: confirm projects.json is in the same folder as index.html.</p>`;
+    featuredGrid.innerHTML = `
+      <div class="feature reveal" style="padding:16px">
+        <p class="feature-k">Error</p>
+        <h3 class="feature-h">projects.json didn’t load</h3>
+        <p class="feature-p">Reason: ${msg}</p>
+        <p class="feature-p">Fix: confirm <span class="mono">projects.json</span> is next to <span class="mono">index.html</span> and committed to GitHub.</p>
+      </div>
+    `;
+    foldersRoot.innerHTML = `
+      <div class="folder reveal" style="padding:16px">
+        <p class="folder-title">No collections rendered</p>
+        <p class="folder-sub">Reason: ${msg}</p>
+      </div>
+    `;
   }
 }
 
