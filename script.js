@@ -96,20 +96,30 @@ function parallaxHero() {
   tick();
 }
 
+/* Reveal handling */
+let _revealObserver = null;
+
 function revealOnScroll() {
   const items = Array.from(document.querySelectorAll(".reveal"));
   if (!items.length) return;
 
-  const io = new IntersectionObserver((entries) => {
+  if (_revealObserver) _revealObserver.disconnect();
+
+  _revealObserver = new IntersectionObserver((entries) => {
     for (const ent of entries) {
       if (ent.isIntersecting) {
         ent.target.classList.add("show");
-        io.unobserve(ent.target);
+        _revealObserver.unobserve(ent.target);
       }
     }
   }, { threshold: 0.14 });
 
-  items.forEach(n => io.observe(n));
+  items.forEach(n => _revealObserver.observe(n));
+}
+
+function forceShow(root) {
+  if (!root) return;
+  root.querySelectorAll(".reveal").forEach(el => el.classList.add("show"));
 }
 
 function orbMotion() {
@@ -229,8 +239,7 @@ function magneticFolders() {
 }
 
 /**
- * Stable Approach scroll logic (no observers fighting)
- * Progress bar starts at first tick automatically.
+ * Stable Approach scroll logic
  */
 function storyScroll() {
   const stepsWrap = document.getElementById("storySteps");
@@ -320,12 +329,119 @@ function storyScroll() {
   tick();
 }
 
-/* ---------------------------
-   Projects rendering (NEW)
----------------------------- */
+/**
+ * SAFEST POSSIBLE JSON LOADER:
+ * - never wipes content unless JSON is successfully parsed
+ * - logs useful errors
+ */
+async function loadProjects() {
+  const featuredRoot = document.getElementById("featuredGrid");
+  const workRoot = document.getElementById("foldersRoot");
+
+  // If you didn't add these IDs yet, just skip (keeps your HTML)
+  if (!featuredRoot || !workRoot) return;
+
+  const featuredBackup = featuredRoot.innerHTML;
+  const workBackup = workRoot.innerHTML;
+
+  try {
+    const res = await fetch("./projects.json?v=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error(`projects.json fetch failed: ${res.status} ${res.statusText}`);
+
+    const data = await res.json();
+    if (!data) throw new Error("projects.json parsed but empty");
+
+    // Expecting:
+    // { githubPortfolioUrl, featured: [...], collections: [...] }
+    const githubUrl = data.githubPortfolioUrl || "https://github.com/ColtenHargett/portfolio";
+
+    // Render Featured
+    if (Array.isArray(data.featured)) {
+      featuredRoot.innerHTML = data.featured.map(p => {
+        const tags = (p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+        const href = p.url || githubUrl;
+        return `
+          <article class="feature reveal tilt">
+            <div class="feature-top">
+              <p class="feature-k">Featured project</p>
+              <h3 class="feature-h">${escapeHtml(p.title || "Project")}</h3>
+              <p class="feature-p">${escapeHtml(p.description || "")}</p>
+            </div>
+            <div class="feature-row">${tags}</div>
+            <div class="feature-actions">
+              <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See on GitHub</a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    // Render Work folders
+    if (Array.isArray(data.collections)) {
+      workRoot.innerHTML = data.collections.map(col => {
+        const items = (col.items || []).map(item => {
+          const tags = (item.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+          const link = item.url || githubUrl;
+          const bullets = (item.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join("");
+
+          return `
+            <article class="card tilt">
+              <h3 class="h3">${escapeHtml(item.title || "Project")}</h3>
+              ${item.sub ? `<p class="sub">${escapeHtml(item.sub)}</p>` : ""}
+              ${bullets ? `<ul class="bullets">${bullets}</ul>` : ""}
+              <div class="row">
+                ${tags}
+                <a class="mini mag" href="${link}" target="_blank" rel="noreferrer">View on GitHub</a>
+              </div>
+            </article>
+          `;
+        }).join("");
+
+        return `
+          <details class="folder reveal" id="${escapeAttr(col.id || "")}">
+            <summary class="folder-head">
+              <div class="folder-left">
+                <span class="folder-icon" aria-hidden="true">${escapeHtml(col.icon || "▢")}</span>
+                <div>
+                  <p class="folder-title">${escapeHtml(col.title || "Collection")}</p>
+                  <p class="folder-sub">${escapeHtml(col.subtitle || "")}</p>
+                </div>
+              </div>
+              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+            </summary>
+            <div class="folder-body">
+              <div class="cards">
+                ${items}
+              </div>
+            </div>
+          </details>
+        `;
+      }).join("");
+    }
+
+    // Make sure new elements are visible + interactive
+    revealOnScroll();
+    forceShow(featuredRoot);
+    forceShow(workRoot);
+    tiltCards();
+    magneticButtons();
+    magneticFolders();
+
+  } catch (err) {
+    console.error("[Portfolio] Failed to load projects.json", err);
+
+    // Restore your old HTML so the page doesn't look empty
+    featuredRoot.innerHTML = featuredBackup;
+    workRoot.innerHTML = workBackup;
+
+    // Ensure restored content isn't invisible
+    forceShow(featuredRoot);
+    forceShow(workRoot);
+  }
+}
 
 function escapeHtml(s) {
-  return String(s)
+  return String(s ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -333,141 +449,27 @@ function escapeHtml(s) {
     .replaceAll("'", "&#039;");
 }
 
-function renderTagRow(tags) {
-  const safe = (Array.isArray(tags) ? tags : []).slice(0, 6);
-  return safe.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+function escapeAttr(s) {
+  return String(s ?? "").replaceAll('"', "");
 }
 
-function renderFeaturedCard(item) {
-  const title = escapeHtml(item.title || "Project");
-  const subtitle = escapeHtml(item.subtitle || "");
-  const href = item.github_url || "#";
-  const tags = renderTagRow(item.tags);
-
-  return `
-    <article class="feature reveal tilt">
-      <div class="feature-top">
-        <p class="feature-k">Featured project</p>
-        <h3 class="feature-h">${title}</h3>
-        <p class="feature-p">${subtitle}</p>
-      </div>
-
-      <div class="feature-row">${tags}</div>
-
-      <div class="feature-actions">
-        <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See writeup</a>
-      </div>
-    </article>
-  `;
-}
-
-function renderProjectCard(p) {
-  const title = escapeHtml(p.title || "Project");
-  const subtitle = escapeHtml(p.subtitle || "");
-  const href = p.github_url || "#";
-  const tags = renderTagRow(p.tags);
-
-  return `
-    <article class="card tilt">
-      <h3 class="h3">${title}</h3>
-      <p class="sub">${subtitle}</p>
-      <div class="row">
-        ${tags}
-        <a class="mini mag" href="${href}" target="_blank" rel="noreferrer">View on GitHub</a>
-      </div>
-    </article>
-  `;
-}
-
-function renderCollectionDetails(col) {
-  const id = escapeHtml(col.id || "collection");
-  const title = escapeHtml(col.title || "Collection");
-  const subtitle = escapeHtml(col.subtitle || "");
-  const icon = escapeHtml(col.icon || "▢");
-
-  const projects = Array.isArray(col.projects) ? col.projects : [];
-  const cards = projects.map(renderProjectCard).join("");
-
-  return `
-    <details class="folder reveal" id="collection-${id}">
-      <summary class="folder-head">
-        <div class="folder-left">
-          <span class="folder-icon" aria-hidden="true">${icon}</span>
-          <div>
-            <p class="folder-title">${title}</p>
-            <p class="folder-sub">${subtitle}</p>
-          </div>
-        </div>
-        <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
-      </summary>
-
-      <div class="folder-body">
-        <div class="cards">
-          ${cards || `<p class="muted">No projects yet.</p>`}
-        </div>
-      </div>
-    </details>
-  `;
-}
-
-async function loadProjects() {
-  const featuredGrid = document.getElementById("featuredGrid");
-  const foldersRoot = document.getElementById("foldersRoot");
-
-  const repoBtnFeatured = document.getElementById("repoBtnFeatured");
-  const repoBtnWork = document.getElementById("repoBtnWork");
-
-  if (!featuredGrid || !foldersRoot) return;
-
-  try {
-    const res = await fetch("./projects.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`projects.json not found (${res.status})`);
-    const data = await res.json();
-
-    const portfolioRepo = data?.meta?.portfolio_repo || "https://github.com/ColtenHargett/portfolio";
-    if (repoBtnFeatured) repoBtnFeatured.href = portfolioRepo;
-    if (repoBtnWork) repoBtnWork.href = portfolioRepo;
-
-    const featured = Array.isArray(data.featured) ? data.featured : [];
-    const collections = Array.isArray(data.collections) ? data.collections : [];
-
-    featuredGrid.innerHTML = featured.map(renderFeaturedCard).join("") || `<p class="muted">No featured projects yet.</p>`;
-    foldersRoot.innerHTML = collections.map(renderCollectionDetails).join("") || `<p class="muted">No collections yet.</p>`;
-
-    // Re-bind tilt/magnet behavior for newly injected elements
-    revealOnScroll();   // re-observe the newly created .reveal elements
-    tiltCards();        // re-bind tilt for newly created cards
-    magneticFolders();  // re-bind magnetic folder motion
-    magneticButtons();  // re-bind magnetic buttons
-
-  }   } catch (err) {
-    const msg = escapeHtml(err?.message || String(err));
-    featuredGrid.innerHTML = `
-      <div class="feature reveal" style="padding:16px">
-        <p class="feature-k">Error</p>
-        <h3 class="feature-h">projects.json didn’t load</h3>
-        <p class="feature-p">Reason: ${msg}</p>
-        <p class="feature-p">Fix: confirm <span class="mono">projects.json</span> is next to <span class="mono">index.html</span> and committed to GitHub.</p>
-      </div>
-    `;
-    foldersRoot.innerHTML = `
-      <div class="folder reveal" style="padding:16px">
-        <p class="folder-title">No collections rendered</p>
-        <p class="folder-sub">Reason: ${msg}</p>
-      </div>
-    `;
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   setYear();
   mobileMenu();
   spotlight();
   topProgress();
   headerBlur();
   parallaxHero();
+
+  // Setup reveal for initial DOM
   revealOnScroll();
+
   orbMotion();
-  loadProjects();      // NEW
+  tiltCards();
+  magneticButtons();
+  magneticFolders();
   storyScroll();
+
+  // Load JSON projects (doesn't break page if it fails)
+  await loadProjects();
 });
