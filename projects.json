@@ -1,76 +1,138 @@
 {
+  "repoBase": "https://github.com/ColtenHargett/portfolio",
+  "branch": "main",
+
   "featured": [
     {
-      "title": "Stock Market Predictor",
-      "summary": "Data pipeline prototype designed for reliability and clear outputs.",
-      "tags": ["AI", "Data", "Python"],
-      "url": "https://github.com/ColtenHargett/projects/tree/main/AI/Stock%20Market%20Predictor"
+      "title": "News Summary Agent",
+      "kind": "folder",
+      "path": "AI/News%20Summary%20Agent",
+      "summary": "Scraper + datastore builder + scheduler + agent pipeline.",
+      "tags": ["AI", "Automation", "Python"]
     },
     {
-      "title": "News Summary Agent",
-      "summary": "Agent that summarizes sources into structured, readable outputs.",
-      "tags": ["AI", "RAG", "Automation"],
-      "url": "https://github.com/ColtenHargett/projects/tree/main/AI/News%20Summary%20Agent"
+      "title": "Stock Market Predictor",
+      "kind": "folder",
+      "path": "AI/Stock%20Market%20Predictor",
+      "summary": "Market workflow prototype built around reliable universe-building.",
+      "tags": ["AI", "Data", "Python"]
+    },
+    {
+      "title": "Rock,Paper,Scissors Rendition.py",
+      "kind": "file",
+      "path": "Python/Rock,Paper,Scissors%20Rendition.py",
+      "summary": "Five-choice, medieval-themed RPS variant with match logic.",
+      "tags": ["Python", "Game"]
     }
   ],
+
   "collections": [
     {
-      "name": "Java",
-      "description": "Core programming projects and exercises.",
+      "name": "AI",
+      "description": "Applied AI projects and agents.",
       "items": [
         {
-          "title": "ATM Simulation",
-          "summary": "Command-line banking simulation with validation and account actions.",
-          "tags": ["Java", "CLI"],
-          "url": "https://github.com/ColtenHargett/projects/blob/main/Java/ATM%20Simulation.java"
+          "title": "News Summary Agent",
+          "kind": "folder",
+          "path": "AI/News%20Summary%20Agent",
+          "summary": "Folder project (Agent.py, Scraper.py, Database_Builder.py, scheduler.py).",
+          "tags": ["AI", "Automation"]
         },
         {
-          "title": "Grocery List Maker",
-          "summary": "Interactive list builder with editing and formatted output.",
-          "tags": ["Java"],
-          "url": "https://github.com/ColtenHargett/projects/blob/main/Java/Grocery%20List%20Maker.java"
+          "title": "Stock Market Predictor",
+          "kind": "folder",
+          "path": "AI/Stock%20Market%20Predictor",
+          "summary": "Folder project (UniverseBuilder.py).",
+          "tags": ["AI", "Data"]
+        }
+      ]
+    },
+    {
+      "name": "Java",
+      "description": "Java programs and exercises.",
+      "items": [
+        {
+          "title": "ATM Simulation.java",
+          "kind": "file",
+          "path": "Java/ATM%20Simulation.java",
+          "summary": "Interactive ATM-style CLI program.",
+          "tags": ["Java", "CLI"]
+        },
+        {
+          "title": "Grocery List Maker.java",
+          "kind": "file",
+          "path": "Java/Grocery%20List%20Maker.java",
+          "summary": "Interactive list builder with clean output formatting.",
+          "tags": ["Java"]
+        },
+        {
+          "title": "Exercises",
+          "kind": "folder",
+          "path": "Java/Exercises",
+          "summary": "Additional Java practice and smaller programs.",
+          "tags": ["Java"]
         }
       ]
     },
     {
       "name": "Python",
-      "description": "Small tools and analyzers built for speed and clarity.",
+      "description": "Tools, analyzers, and interactive programs.",
       "items": [
         {
           "title": "Morse Code Translator",
-          "summary": "Encodes and decodes text using clean mapping logic.",
-          "tags": ["Python"],
-          "url": "https://github.com/ColtenHargett/projects/tree/main/Python/Morse%20Code%20Translator"
+          "kind": "folder",
+          "path": "Python/Morse%20Code%20Translator",
+          "summary": "Folder project for encoding/decoding Morse code.",
+          "tags": ["Python"]
         },
         {
-          "title": "Hangman",
-          "summary": "Terminal hangman with validation and replay support.",
-          "tags": ["Python", "Game"],
-          "url": "https://github.com/ColtenHargett/projects/blob/main/Python/Hangman.py"
+          "title": "Movie Analyzer",
+          "kind": "folder",
+          "path": "Python/Movie%20Analyzer",
+          "summary": "Folder project for analyzing movie data.",
+          "tags": ["Python", "Data"]
         },
         {
-          "title": "Medieval Clash (5-Choice RPS)",
-          "summary": "Five-choice Rock–Paper–Scissors-style game with match logic.",
-          "tags": ["Python", "Game"],
-          "url": "https://github.com/ColtenHargett/projects/blob/main/Python/Rock,Paper,Scissors%20Rendition.py"
-        }
-      ]
-    },
-    {
-      "name": "AI",
-      "description": "Agents and applied AI experiments (RAG, summarization, pipelines).",
-      "items": [
-        {
-          "title": "News Summary Agent",
-          "summary": "Summarizes sources into structured outputs.",
-          "tags": ["AI", "RAG"],
-          "url": "https://github.com/ColtenHargett/projects/tree/main/AI/News%20Summary%20Agent"
+          "title": "Restaurant Analyzer",
+          "kind": "folder",
+          "path": "Python/Restaurant%20Analyzer",
+          "summary": "Folder project for analyzing restaurant data/inputs.",
+          "tags": ["Python", "Data"]
         },
         {
-          "title": "Stock Market Predictor",
-          "summary": "A prototype for tracking and surfacing market changes.",
-          "tags": ["AI", "Data"],
-          "url": "https://github.com/ColtenHargett/projects/tree/main/AI/Stock%20Market%20Predictor"
+          "title": "Song Analyzer",
+          "kind": "folder",
+          "path": "Python/Song%20Analyzer",
+          "summary": "Folder project for analyzing song data.",
+          "tags": ["Python", "Data"]
+        },
+        {
+          "title": "Ascii Art Maker.py",
+          "kind": "file",
+          "path": "Python/Ascii%20Art%20Maker.py",
+          "summary": "Generates ASCII output from inputs.",
+          "tags": ["Python"]
+        },
+        {
+          "title": "Dice Rolling Simulator.py",
+          "kind": "file",
+          "path": "Python/Dice%20Rolling%20Simulator.py",
+          "summary": "Simulates rolls and prints results cleanly.",
+          "tags": ["Python", "Simulation"]
+        },
+        {
+          "title": "Hangman.py",
+          "kind": "file",
+          "path": "Python/Hangman.py",
+          "summary": "Terminal hangman with validation and replay flow.",
+          "tags": ["Python", "Game"]
+        },
+        {
+          "title": "Rock,Paper,Scissors Rendition.py",
+          "kind": "file",
+          "path": "Python/Rock,Paper,Scissors%20Rendition.py",
+          "summary": "Five-choice, medieval-themed RPS variant.",
+          "tags": ["Python", "Game"]
         }
       ]
     }
