@@ -95,214 +95,56 @@
       </div>
     </section>
 
-    <!-- FEATURED -->
+    <!-- FEATURED (now populated by projects.json) -->
     <section class="section featured" id="featured" aria-label="Featured projects">
       <div class="wrap">
-        <header class="head reveal">
-          <h2 class="h2">Featured</h2>
-          <p class="muted">The work I’d show first in an interview.</p>
+        <header class="head reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+          <div>
+            <h2 class="h2">Featured</h2>
+            <p class="muted">The work I’d show first in an interview.</p>
+          </div>
+
+          <!-- script.js can set this href from projects.json.repoBase -->
+          <a class="btn small mag" id="repoBtnFeatured" href="https://github.com/ColtenHargett/portfolio" target="_blank" rel="noreferrer">
+            GitHub Portfolio
+          </a>
         </header>
 
-        <div class="featured-grid">
-          <article class="feature reveal tilt">
-            <div class="feature-top">
-              <p class="feature-k">Featured project</p>
-              <h3 class="feature-h">Intelligent Course Planner</h3>
-              <p class="feature-p">
-                A planning tool that maps requirements into a clean, usable path—with guardrails.
-              </p>
-            </div>
+        <!-- JS injects featured cards here -->
+        <div class="featured-grid" id="featuredGrid" aria-live="polite"></div>
 
-            <div class="feature-row">
-              <span class="tag">Python</span>
-              <span class="tag">Constraints</span>
-              <span class="tag">Automation</span>
-            </div>
-
-            <div class="feature-actions">
-              <a class="btn small mag" href="#work">See writeup</a>
-              <a class="btn small ghost mag"
-                 href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Intelligent%20Course%20Planner">
-                Request code
-              </a>
-            </div>
-          </article>
-
-          <article class="feature reveal tilt">
-            <div class="feature-top">
-              <p class="feature-k">Featured project</p>
-              <h3 class="feature-h">Market Tracker Prototype</h3>
-              <p class="feature-p">
-                Reliable fetch → parse → normalize → summarize pipeline designed for real-world messiness.
-              </p>
-            </div>
-
-            <div class="feature-row">
-              <span class="tag">Python</span>
-              <span class="tag">APIs</span>
-              <span class="tag">Data</span>
-            </div>
-
-            <div class="feature-actions">
-              <a class="btn small mag" href="#work">See writeup</a>
-              <a class="btn small ghost mag"
-                 href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Market%20Tracker">
-                Request code
-              </a>
-            </div>
-          </article>
-        </div>
+        <!-- fallback if JS fails -->
+        <noscript>
+          <p class="muted">Enable JavaScript to view featured projects.</p>
+        </noscript>
       </div>
     </section>
 
-    <!-- WORK (Folders / Collections) -->
+    <!-- WORK (Folders / Collections) (now populated by projects.json) -->
     <section class="section" id="work" aria-label="Project collections">
       <div class="wrap">
-        <header class="head reveal">
-          <h2 class="h2">Work</h2>
-          <p class="muted">Organized into collections. Open a folder to browse.</p>
+        <header class="head reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+          <div>
+            <h2 class="h2">Work</h2>
+            <p class="muted">Organized into collections. Open a folder to browse.</p>
+          </div>
+
+          <!-- script.js can set this href from projects.json.repoBase -->
+          <a class="btn small mag" id="repoBtnWork" href="https://github.com/ColtenHargett/portfolio" target="_blank" rel="noreferrer">
+            GitHub Portfolio
+          </a>
         </header>
 
-        <div class="folders">
-          <details class="folder reveal" id="collection-automation">
-            <summary class="folder-head">
-              <div class="folder-left">
-                <span class="folder-icon" aria-hidden="true">⌘</span>
-                <div>
-                  <p class="folder-title">Automation & Tools</p>
-                  <p class="folder-sub">Systems that make work faster and cleaner.</p>
-                </div>
-              </div>
-              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
-            </summary>
-
-            <div class="folder-body">
-              <div class="cards">
-                <article class="card tilt">
-                  <h3 class="h3">Intelligent Course Planner</h3>
-                  <p class="sub">Constraint-based planner that outputs usable paths.</p>
-                  <ul class="bullets">
-                    <li>Transforms requirements into a structured plan with guardrails.</li>
-                    <li>Handles conflicts, partial completion, and “no valid path” cases.</li>
-                    <li>Built for iteration—update inputs and regenerate predictably.</li>
-                  </ul>
-                  <div class="row">
-                    <span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Logic</span>
-                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Intelligent%20Course%20Planner">Code on request</a>
-                  </div>
-                </article>
-
-                <article class="card tilt">
-                  <h3 class="h3">Email Importance Scorer</h3>
-                  <p class="sub">A scoring system for prioritizing messages with confidence.</p>
-                  <ul class="bullets">
-                    <li>Ranks items 1–10 with confidence for later visualization.</li>
-                    <li>Logs JSON for analysis and improvement over time.</li>
-                    <li>Designed to accept feedback to refine scoring.</li>
-                  </ul>
-                  <div class="row">
-                    <span class="tag">AI</span><span class="tag">Scoring</span><span class="tag">JSON</span>
-                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Email%20Scorer">Code on request</a>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </details>
-
-          <details class="folder reveal" id="collection-data">
-            <summary class="folder-head">
-              <div class="folder-left">
-                <span class="folder-icon" aria-hidden="true">◉</span>
-                <div>
-                  <p class="folder-title">Data & Pipelines</p>
-                  <p class="folder-sub">Fetch, parse, normalize, and summarize.</p>
-                </div>
-              </div>
-              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
-            </summary>
-
-            <div class="folder-body">
-              <div class="cards">
-                <article class="card tilt">
-                  <h3 class="h3">Market Tracker Prototype</h3>
-                  <p class="sub">A resilient pipeline for reliable outputs.</p>
-                  <ul class="bullets">
-                    <li>Defensive parsing to handle inconsistent upstream formats.</li>
-                    <li>Normalization layer to keep comparisons meaningful.</li>
-                    <li>Summaries optimized for scanning: what changed and why.</li>
-                  </ul>
-                  <div class="row">
-                    <span class="tag">Python</span><span class="tag">APIs</span><span class="tag">Data</span>
-                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Market%20Tracker">Code on request</a>
-                  </div>
-                </article>
-
-                <article class="card tilt">
-                  <h3 class="h3">Text Analyzer</h3>
-                  <p class="sub">Fast parsing + analysis over large files.</p>
-                  <ul class="bullets">
-                    <li>Efficient scanning for patterns and counts without heavy memory use.</li>
-                    <li>Clear output formatting for quick interpretation.</li>
-                    <li>Built as reusable functions for different datasets.</li>
-                  </ul>
-                  <div class="row">
-                    <span class="tag">Parsing</span><span class="tag">Performance</span><span class="tag">CLI</span>
-                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Code%20Request%20-%20Text%20Analyzer">Code on request</a>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </details>
-
-          <details class="folder reveal" id="collection-web">
-            <summary class="folder-head">
-              <div class="folder-left">
-                <span class="folder-icon" aria-hidden="true">▢</span>
-                <div>
-                  <p class="folder-title">Web & Presentation</p>
-                  <p class="folder-sub">Minimal interfaces with polish.</p>
-                </div>
-              </div>
-              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
-            </summary>
-
-            <div class="folder-body">
-              <div class="cards">
-                <article class="card tilt">
-                  <h3 class="h3">Portfolio System</h3>
-                  <p class="sub">Apple-like narrative + motion without frameworks.</p>
-                  <ul class="bullets">
-                    <li>Folders/collections layout + featured section.</li>
-                    <li>Sticky story that updates only when content is readable.</li>
-                    <li>Accessibility + reduced-motion support.</li>
-                  </ul>
-                  <div class="row">
-                    <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
-                    <a class="mini mag" href="#approach">See approach</a>
-                  </div>
-                </article>
-
-                <article class="card tilt">
-                  <h3 class="h3">Photo Essay Site</h3>
-                  <p class="sub">A minimal, elegant storytelling layout.</p>
-                  <ul class="bullets">
-                    <li>Typography-first composition for readability.</li>
-                    <li>Responsive layout with smooth content pacing.</li>
-                    <li>Designed to be edited quickly without layout breakage.</li>
-                  </ul>
-                  <div class="row">
-                    <span class="tag">Design</span><span class="tag">Layout</span><span class="tag">Story</span>
-                    <a class="mini mag" href="mailto:coltenhargett@gmail.com?subject=Demo%20Request%20-%20Photo%20Essay%20Site">Demo on request</a>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </details>
-        </div>
+        <!-- JS injects folders/collections here -->
+        <div class="folders" id="foldersRoot" aria-live="polite"></div>
 
         <p class="muted note reveal">
-          Tip: link directly to a collection like <span class="mono">#collection-data</span>.
+          Tip: link directly to a collection like <span class="mono">#collection-python</span>.
         </p>
+
+        <noscript>
+          <p class="muted">Enable JavaScript to view the full project list.</p>
+        </noscript>
       </div>
     </section>
 
