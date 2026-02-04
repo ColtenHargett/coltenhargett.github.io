@@ -1,0 +1,78 @@
+{
+  "featured": [
+    {
+      "title": "Stock Market Predictor",
+      "summary": "Data pipeline prototype designed for reliability and clear outputs.",
+      "tags": ["AI", "Data", "Python"],
+      "url": "https://github.com/ColtenHargett/projects/tree/main/AI/Stock%20Market%20Predictor"
+    },
+    {
+      "title": "News Summary Agent",
+      "summary": "Agent that summarizes sources into structured, readable outputs.",
+      "tags": ["AI", "RAG", "Automation"],
+      "url": "https://github.com/ColtenHargett/projects/tree/main/AI/News%20Summary%20Agent"
+    }
+  ],
+  "collections": [
+    {
+      "name": "Java",
+      "description": "Core programming projects and exercises.",
+      "items": [
+        {
+          "title": "ATM Simulation",
+          "summary": "Command-line banking simulation with validation and account actions.",
+          "tags": ["Java", "CLI"],
+          "url": "https://github.com/ColtenHargett/projects/blob/main/Java/ATM%20Simulation.java"
+        },
+        {
+          "title": "Grocery List Maker",
+          "summary": "Interactive list builder with editing and formatted output.",
+          "tags": ["Java"],
+          "url": "https://github.com/ColtenHargett/projects/blob/main/Java/Grocery%20List%20Maker.java"
+        }
+      ]
+    },
+    {
+      "name": "Python",
+      "description": "Small tools and analyzers built for speed and clarity.",
+      "items": [
+        {
+          "title": "Morse Code Translator",
+          "summary": "Encodes and decodes text using clean mapping logic.",
+          "tags": ["Python"],
+          "url": "https://github.com/ColtenHargett/projects/tree/main/Python/Morse%20Code%20Translator"
+        },
+        {
+          "title": "Hangman",
+          "summary": "Terminal hangman with validation and replay support.",
+          "tags": ["Python", "Game"],
+          "url": "https://github.com/ColtenHargett/projects/blob/main/Python/Hangman.py"
+        },
+        {
+          "title": "Medieval Clash (5-Choice RPS)",
+          "summary": "Five-choice Rock–Paper–Scissors-style game with match logic.",
+          "tags": ["Python", "Game"],
+          "url": "https://github.com/ColtenHargett/projects/blob/main/Python/Rock,Paper,Scissors%20Rendition.py"
+        }
+      ]
+    },
+    {
+      "name": "AI",
+      "description": "Agents and applied AI experiments (RAG, summarization, pipelines).",
+      "items": [
+        {
+          "title": "News Summary Agent",
+          "summary": "Summarizes sources into structured outputs.",
+          "tags": ["AI", "RAG"],
+          "url": "https://github.com/ColtenHargett/projects/tree/main/AI/News%20Summary%20Agent"
+        },
+        {
+          "title": "Stock Market Predictor",
+          "summary": "A prototype for tracking and surfacing market changes.",
+          "tags": ["AI", "Data"],
+          "url": "https://github.com/ColtenHargett/projects/tree/main/AI/Stock%20Market%20Predictor"
+        }
+      ]
+    }
+  ]
+}
