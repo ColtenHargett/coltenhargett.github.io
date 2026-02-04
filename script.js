@@ -321,6 +321,191 @@ function storyScroll() {
   tick();
 }
 
+/* ============================================================
+   Projects rendering (projects.json → Featured + Work folders)
+   ============================================================ */
+
+function escapeHtml(str) {
+  return String(str ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function slugify(str) {
+  return String(str ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function joinUrl(base, path) {
+  if (!base) return path || "";
+  if (!path) return base;
+  const b = base.endsWith("/") ? base.slice(0, -1) : base;
+  const p = path.startsWith("/") ? path.slice(1) : path;
+  return `${b}/${p}`;
+}
+
+function setRepoButtons(repoBase) {
+  const a = document.getElementById("repoBtnFeatured");
+  const b = document.getElementById("repoBtnWork");
+  if (a && repoBase) a.href = repoBase;
+  if (b && repoBase) b.href = repoBase;
+}
+
+function renderFeatured(featured, repoBase) {
+  const grid = document.getElementById("featuredGrid");
+  if (!grid) return;
+
+  if (!Array.isArray(featured) || featured.length === 0) {
+    grid.innerHTML = `<p class="muted">No featured projects yet.</p>`;
+    return;
+  }
+
+  grid.innerHTML = featured.map((p) => {
+    const title = escapeHtml(p.title);
+    const desc = escapeHtml(p.description || "");
+    const tags = Array.isArray(p.tags) ? p.tags.slice(0, 6) : [];
+    const url = p.url ? p.url : (p.path ? joinUrl(repoBase, p.path) : repoBase);
+
+    const ctaText = escapeHtml(p.ctaText || "Open on GitHub");
+    const ctaHref = escapeHtml(url || repoBase || "#");
+
+    const writeupHref = p.anchor ? `#${escapeHtml(p.anchor)}` : "#work";
+
+    return `
+      <article class="feature reveal tilt">
+        <div class="feature-top">
+          <p class="feature-k">Featured project</p>
+          <h3 class="feature-h">${title}</h3>
+          <p class="feature-p">${desc}</p>
+        </div>
+
+        <div class="feature-row">
+          ${tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
+        </div>
+
+        <div class="feature-actions">
+          <a class="btn small mag" href="${writeupHref}">See details</a>
+          <a class="btn small ghost mag" href="${ctaHref}" target="_blank" rel="noreferrer">${ctaText}</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function renderWorkCollections(collections, repoBase) {
+  const root = document.getElementById("foldersRoot");
+  if (!root) return;
+
+  if (!Array.isArray(collections) || collections.length === 0) {
+    root.innerHTML = `<p class="muted">No projects yet.</p>`;
+    return;
+  }
+
+  root.innerHTML = collections.map((col) => {
+    const colTitle = escapeHtml(col.title);
+    const colSubtitle = escapeHtml(col.subtitle || "");
+    const colIcon = escapeHtml(col.icon || "▢");
+
+    const colId = col.id ? String(col.id) : `collection-${slugify(colTitle)}`;
+
+    const items = Array.isArray(col.items) ? col.items : [];
+
+    const cardsHtml = items.map((p) => {
+      const title = escapeHtml(p.title);
+      const sub = escapeHtml(p.subtitle || p.description || "");
+      const bullets = Array.isArray(p.bullets) ? p.bullets.slice(0, 4) : [];
+      const tags = Array.isArray(p.tags) ? p.tags.slice(0, 6) : [];
+
+      const url = p.url ? p.url : (p.path ? joinUrl(repoBase, p.path) : repoBase);
+      const linkText = escapeHtml(p.linkText || "View on GitHub");
+      const linkHref = escapeHtml(url || repoBase || "#");
+
+      return `
+        <article class="card tilt">
+          <h3 class="h3">${title}</h3>
+          ${sub ? `<p class="sub">${sub}</p>` : ``}
+
+          ${bullets.length ? `
+            <ul class="bullets">
+              ${bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}
+            </ul>
+          ` : ``}
+
+          <div class="row">
+            ${tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
+            ${url ? `<a class="mini mag" href="${linkHref}" target="_blank" rel="noreferrer">${linkText}</a>` : ``}
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    const openByDefault = col.open === true ? " open" : "";
+
+    return `
+      <details class="folder reveal" id="${escapeHtml(colId)}"${openByDefault}>
+        <summary class="folder-head">
+          <div class="folder-left">
+            <span class="folder-icon" aria-hidden="true">${colIcon}</span>
+            <div>
+              <p class="folder-title">${colTitle}</p>
+              <p class="folder-sub">${colSubtitle}</p>
+            </div>
+          </div>
+          <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+        </summary>
+
+        <div class="folder-body">
+          <div class="cards">
+            ${cardsHtml || `<p class="muted">No items yet.</p>`}
+          </div>
+        </div>
+      </details>
+    `;
+  }).join("");
+}
+
+async function loadProjects() {
+  // If these containers aren't on the page, just skip quietly.
+  const featuredGrid = document.getElementById("featuredGrid");
+  const foldersRoot = document.getElementById("foldersRoot");
+  if (!featuredGrid && !foldersRoot) return;
+
+  try {
+    const res = await fetch("./projects.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`projects.json HTTP ${res.status}`);
+    const data = await res.json();
+
+    const repoBase = data.repoBase || data.repo || data.repository || "";
+    setRepoButtons(repoBase);
+
+    // Render
+    renderFeatured(data.featured, repoBase);
+    renderWorkCollections(data.collections, repoBase);
+
+    // Re-run behaviors for injected elements
+    revealOnScroll();
+    tiltCards();
+    magneticButtons();
+    magneticFolders();
+  } catch (err) {
+    // Fail gracefully (don't break the rest of the site)
+    if (featuredGrid) {
+      featuredGrid.innerHTML = `<p class="muted">Could not load projects.</p>`;
+    }
+    if (foldersRoot) {
+      foldersRoot.innerHTML = `<p class="muted">Could not load projects.</p>`;
+    }
+    // Uncomment for debugging:
+    // console.error(err);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setYear();
   mobileMenu();
@@ -334,4 +519,5 @@ document.addEventListener("DOMContentLoaded", () => {
   magneticButtons();
   magneticFolders();
   storyScroll();
+  loadProjects();
 });
