@@ -9,18 +9,16 @@
   <script>
     document.documentElement.classList.add('js');
   </script>
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="./styles.css?v=6" />
 </head>
 
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- top scroll progress (subtle) -->
   <div class="top-progress" aria-hidden="true">
     <span class="top-progress-bar" id="topProgress"></span>
   </div>
 
-  <!-- cursor spotlight (soft, optional) -->
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
   <header class="nav" id="siteHeader">
@@ -80,11 +78,10 @@
           </div>
 
           <p class="note muted reveal">
-            Some work is private to protect coursework. I can share code, demos, or walkthroughs on request.
+            Everything here links to my GitHub portfolio repo.
           </p>
         </div>
 
-        <!-- orb -->
         <aside class="orb-wrap reveal" aria-label="Interactive orb">
           <div class="orb" id="orb">
             <div class="orb-sheen" aria-hidden="true"></div>
@@ -95,56 +92,41 @@
       </div>
     </section>
 
-    <!-- FEATURED (now populated by projects.json) -->
+    <!-- FEATURED -->
     <section class="section featured" id="featured" aria-label="Featured projects">
       <div class="wrap">
-        <header class="head reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
-          <div>
-            <h2 class="h2">Featured</h2>
-            <p class="muted">The work I’d show first in an interview.</p>
-          </div>
+        <header class="head reveal">
+          <h2 class="h2">Featured</h2>
+          <p class="muted">The work I’d show first in an interview.</p>
 
-          <!-- script.js can set this href from projects.json.repoBase -->
-          <a class="btn small mag" id="repoBtnFeatured" href="https://github.com/ColtenHargett/portfolio" target="_blank" rel="noreferrer">
-            GitHub Portfolio
-          </a>
+          <div class="actions" style="margin-top:12px">
+            <a class="btn small ghost mag" id="repoBtnFeatured" href="#" target="_blank" rel="noreferrer">GitHub Portfolio</a>
+          </div>
         </header>
 
-        <!-- JS injects featured cards here -->
-        <div class="featured-grid" id="featuredGrid" aria-live="polite"></div>
-
-        <!-- fallback if JS fails -->
-        <noscript>
-          <p class="muted">Enable JavaScript to view featured projects.</p>
-        </noscript>
+        <!-- Filled by JS from projects.json -->
+        <div class="featured-grid" id="featuredGrid"></div>
       </div>
     </section>
 
-    <!-- WORK (Folders / Collections) (now populated by projects.json) -->
+    <!-- WORK (Folders / Collections) -->
     <section class="section" id="work" aria-label="Project collections">
       <div class="wrap">
-        <header class="head reveal" style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
-          <div>
-            <h2 class="h2">Work</h2>
-            <p class="muted">Organized into collections. Open a folder to browse.</p>
-          </div>
+        <header class="head reveal">
+          <h2 class="h2">Work</h2>
+          <p class="muted">Organized into collections. Open a folder to browse.</p>
 
-          <!-- script.js can set this href from projects.json.repoBase -->
-          <a class="btn small mag" id="repoBtnWork" href="https://github.com/ColtenHargett/portfolio" target="_blank" rel="noreferrer">
-            GitHub Portfolio
-          </a>
+          <div class="actions" style="margin-top:12px">
+            <a class="btn small ghost mag" id="repoBtnWork" href="#" target="_blank" rel="noreferrer">GitHub Portfolio</a>
+          </div>
         </header>
 
-        <!-- JS injects folders/collections here -->
-        <div class="folders" id="foldersRoot" aria-live="polite"></div>
+        <!-- Filled by JS from projects.json -->
+        <div class="folders" id="foldersRoot"></div>
 
         <p class="muted note reveal">
           Tip: link directly to a collection like <span class="mono">#collection-python</span>.
         </p>
-
-        <noscript>
-          <p class="muted">Enable JavaScript to view the full project list.</p>
-        </noscript>
       </div>
     </section>
 
@@ -210,7 +192,7 @@
         </div>
 
         <p class="note muted reveal">
-          Some projects are private to protect coursework. I can share code, demos, or walkthroughs on request.
+          Everything in Featured/Work links directly to GitHub.
         </p>
       </div>
     </section>
@@ -257,6 +239,6 @@
     </section>
   </main>
 
-  <script src="./script.js?v=5" defer></script>
+  <script src="./script.js?v=6" defer></script>
 </body>
 </html>
