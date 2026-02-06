@@ -396,6 +396,10 @@ function storyScroll() {
    - Populates Featured + Work folders from projects.json
    - Links go directly to file/folder inside repo using path
 ----------------------------- */
+function pickPath(obj) {
+  // Accept a few common key names so you don't have to fight JSON formatting
+  return obj?.path || obj?.repoPath || obj?.folder || obj?.file || obj?.projectPath || "";
+}
 async function loadProjects() {
   const featuredGrid = document.getElementById("featuredGrid");
   const foldersRoot = document.getElementById("foldersRoot");
@@ -420,7 +424,9 @@ async function loadProjects() {
         const title = escapeHtml(p.title || "Project");
         const desc = escapeHtml(p.description || "");
         const tags = Array.isArray(p.tags) ? p.tags : [];
-        const href = p.url || githubLink(githubUrl, p.path);
+        const pPath = pickPath(p);
+         const href = p.url || githubLink(githubUrl, pPath);
+         if (!p.url && !pPath) console.warn("[Featured missing path/url]", p);
 
         const tagHtml = tags
           .slice(0, 6)
@@ -471,7 +477,9 @@ async function loadProjects() {
             const itTitle = escapeHtml(item.title || "Project");
             const itSub = escapeHtml(item.sub || "");
             const itTags = Array.isArray(item.tags) ? item.tags : [];
-            const itHref = item.url || githubLink(githubUrl, item.path);
+            const itPath = pickPath(item); 
+             const itHref = item.url || githubLink(githubUrl, itPath); 
+             if (!item.url && !itPath) console.warn("[Item missing path/url]", item);
 
             const tagsHtml = itTags
               .slice(0, 6)
