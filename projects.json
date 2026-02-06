@@ -1,115 +1,113 @@
 {
-  "meta": {
-    "portfolio_repo": "https://github.com/ColtenHargett/portfolio"
-  },
+  "githubPortfolioUrl": "https://github.com/ColtenHargett/portfolio",
   "featured": [
     {
       "title": "Stock Market Predictor",
-      "subtitle": "A prototype pipeline for building a symbol universe and preparing data for analysis.",
+      "description": "Prototype pipeline for market data and symbol tracking.",
       "tags": ["AI", "Python", "Data"],
-      "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/AI/Stock%20Market%20Predictor"
+      "path": "AI/Stock Market Predictor/"
     },
     {
       "title": "News Summary Agent",
-      "subtitle": "Agent + scraper + scheduler that collects and summarizes news for quick scanning.",
+      "description": "Scrapes and summarizes news with a modular agent pipeline.",
       "tags": ["AI", "Python", "Automation"],
-      "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/AI/News%20Summary%20Agent"
+      "path": "AI/News Summary Agent/"
     }
   ],
   "collections": [
     {
-      "id": "python",
-      "title": "Python",
-      "subtitle": "CLI tools, analyzers, and small systems with clean outputs.",
+      "id": "collection-python",
       "icon": "◉",
-      "projects": [
+      "title": "Python",
+      "subtitle": "Scripts, analyzers, and small tools.",
+      "items": [
         {
           "title": "Morse Code Translator",
-          "subtitle": "Encode/decode text with clear prompts and predictable formatting.",
-          "tags": ["Python", "CLI", "Translator"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/Python/Morse%20Code%20Translator"
+          "sub": "Encode/decode text to Morse code.",
+          "tags": ["Python"],
+          "path": "Python/Morse Code Translator/"
         },
         {
           "title": "Movie Analyzer",
-          "subtitle": "Parses and analyzes structured movie data for fast summaries.",
-          "tags": ["Python", "Parsing", "Analysis"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/Python/Movie%20Analyzer"
+          "sub": "Analyze movie datasets / text output.",
+          "tags": ["Python", "Parsing"],
+          "path": "Python/Movie Analyzer/"
         },
         {
           "title": "Restaurant Analyzer",
-          "subtitle": "Analyzes restaurant data and prints readable results.",
-          "tags": ["Python", "Data", "Analysis"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/Python/Restaurant%20Analyzer"
+          "sub": "Parse and analyze restaurant data.",
+          "tags": ["Python", "Data"],
+          "path": "Python/Restaurant Analyzer/"
         },
         {
           "title": "Song Analyzer",
-          "subtitle": "Processes song/artist lists and outputs useful stats quickly.",
-          "tags": ["Python", "Text", "Analysis"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/Python/Song%20Analyzer"
+          "sub": "Analyze song/artist datasets with custom functions.",
+          "tags": ["Python", "Files"],
+          "path": "Python/Song Analyzer/"
         },
         {
           "title": "Ascii Art Maker.py",
-          "subtitle": "Generates ASCII art from input with clean output formatting.",
-          "tags": ["Python", "CLI", "Fun"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/blob/main/Python/Ascii%20Art%20Maker.py"
+          "sub": "Generate ASCII art output.",
+          "tags": ["Python"],
+          "path": "Python/Ascii Art Maker.py"
         },
         {
           "title": "Dice Rolling Simulator.py",
-          "subtitle": "Simulates dice rolls and outputs distributions and results.",
-          "tags": ["Python", "Simulation", "Math"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/blob/main/Python/Dice%20Rolling%20Simulator.py"
+          "sub": "Simulate dice rolls and distributions.",
+          "tags": ["Python", "Simulation"],
+          "path": "Python/Dice Rolling Simulator.py"
         },
         {
           "title": "Hangman.py",
-          "subtitle": "A clean CLI hangman game with validation and replay.",
-          "tags": ["Python", "Game", "CLI"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/blob/main/Python/Hangman.py"
+          "sub": "CLI hangman game implementation.",
+          "tags": ["Python", "Game"],
+          "path": "Python/Hangman.py"
         },
         {
           "title": "Rock,Paper,Scissors Rendition.py",
-          "subtitle": "A themed strategy game variant with multiple champions and best-of matches.",
-          "tags": ["Python", "Game", "Logic"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/blob/main/Python/Rock,Paper,Scissors%20Rendition.py"
+          "sub": "Medieval Clash (5-choice RPS variant).",
+          "tags": ["Python", "Game"],
+          "path": "Python/Rock,Paper,Scissors Rendition.py"
         }
       ]
     },
     {
-      "id": "java",
+      "id": "collection-java",
+      "icon": "⌘",
       "title": "Java",
-      "subtitle": "Focused exercises emphasizing structure, IO, and correctness.",
-      "icon": "▢",
-      "projects": [
+      "subtitle": "Coursework projects and exercises.",
+      "items": [
         {
           "title": "ATM Simulation.java",
-          "subtitle": "Simulates ATM interactions with clear prompts and safe handling.",
-          "tags": ["Java", "CLI", "Simulation"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/blob/main/Java/Exercises/ATM%20Simulation.java"
+          "sub": "ATM simulation with input validation and state updates.",
+          "tags": ["Java", "CLI"],
+          "path": "Java/Exercises/ATM Simulation.java"
         },
         {
           "title": "Grocery List Maker.java",
-          "subtitle": "Interactive grocery list builder with readable output.",
-          "tags": ["Java", "CLI", "Utility"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/blob/main/Java/Exercises/Grocery%20List%20Maker.java"
+          "sub": "Build and manage grocery lists via console interaction.",
+          "tags": ["Java", "CLI"],
+          "path": "Java/Exercises/Grocery List Maker.java"
         }
       ]
     },
     {
-      "id": "ai",
+      "id": "collection-ai",
+      "icon": "▢",
       "title": "AI",
-      "subtitle": "Agents, pipelines, and prototypes that reduce friction and speed decisions.",
-      "icon": "⌘",
-      "projects": [
+      "subtitle": "Agents, pipelines, and applied AI tools.",
+      "items": [
         {
           "title": "News Summary Agent",
-          "subtitle": "Agent + scraper + scheduler + database builder for summarizing news.",
-          "tags": ["AI", "Python", "Automation"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/AI/News%20Summary%20Agent"
+          "sub": "Agent pipeline: scrape → store → summarize.",
+          "tags": ["AI", "Python"],
+          "path": "AI/News Summary Agent/"
         },
         {
           "title": "Stock Market Predictor",
-          "subtitle": "Universe builder and pipeline scaffolding for market analysis.",
+          "sub": "Early-stage predictor / data pipeline prototype.",
           "tags": ["AI", "Python", "Data"],
-          "github_url": "https://github.com/ColtenHargett/portfolio/tree/main/AI/Stock%20Market%20Predictor"
+          "path": "AI/Stock Market Predictor/"
         }
       ]
     }
