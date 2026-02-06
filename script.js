@@ -1,10 +1,45 @@
 function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
+/* -----------------------------
+   Small utilities
+----------------------------- */
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function isFilePath(p) {
+  // Treat anything with an extension as a file (works well for your repo)
+  return /\.[a-z0-9]+$/i.test(String(p || "").trim());
+}
+
+function githubLink(repoUrl, path) {
+  if (!repoUrl) return "#";
+  const cleanRepo = repoUrl.replace(/\/$/, "");
+  if (!path) return cleanRepo;
+
+  const cleanPath = String(path).replace(/^\/+/, "");
+  const kind = isFilePath(cleanPath) ? "blob" : "tree";
+
+  // encodeURI keeps slashes, encodes spaces -> %20
+  return `${cleanRepo}/${kind}/main/${encodeURI(cleanPath)}`;
+}
+
+/* -----------------------------
+   Footer year
+----------------------------- */
 function setYear() {
   const y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 }
 
+/* -----------------------------
+   Mobile menu
+----------------------------- */
 function mobileMenu() {
   const btn = document.getElementById("menuBtn");
   const menu = document.getElementById("mobileMenu");
@@ -26,6 +61,9 @@ function mobileMenu() {
   });
 }
 
+/* -----------------------------
+   Spotlight
+----------------------------- */
 function spotlight() {
   const el = document.getElementById("spotlight");
   if (!el) return;
@@ -46,6 +84,9 @@ function spotlight() {
   });
 }
 
+/* -----------------------------
+   Top scroll progress bar
+----------------------------- */
 function topProgress() {
   const bar = document.getElementById("topProgress");
   if (!bar) return;
@@ -62,6 +103,9 @@ function topProgress() {
   tick();
 }
 
+/* -----------------------------
+   Header blur on scroll
+----------------------------- */
 function headerBlur() {
   const header = document.getElementById("siteHeader");
   if (!header) return;
@@ -74,6 +118,9 @@ function headerBlur() {
   tick();
 }
 
+/* -----------------------------
+   Hero parallax
+----------------------------- */
 function parallaxHero() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
@@ -88,40 +135,43 @@ function parallaxHero() {
     hero.style.setProperty("--heroParallax", `${y}px`);
   }
 
-  window.addEventListener("scroll", () => {
-    if (raf) return;
-    raf = requestAnimationFrame(tick);
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (raf) return;
+      raf = requestAnimationFrame(tick);
+    },
+    { passive: true }
+  );
 
   tick();
 }
 
-/* Reveal handling */
-let _revealObserver = null;
-
+/* -----------------------------
+   Reveal on scroll
+----------------------------- */
 function revealOnScroll() {
   const items = Array.from(document.querySelectorAll(".reveal"));
   if (!items.length) return;
 
-  if (_revealObserver) _revealObserver.disconnect();
-
-  _revealObserver = new IntersectionObserver((entries) => {
-    for (const ent of entries) {
-      if (ent.isIntersecting) {
-        ent.target.classList.add("show");
-        _revealObserver.unobserve(ent.target);
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const ent of entries) {
+        if (ent.isIntersecting) {
+          ent.target.classList.add("show");
+          io.unobserve(ent.target);
+        }
       }
-    }
-  }, { threshold: 0.14 });
+    },
+    { threshold: 0.14 }
+  );
 
-  items.forEach(n => _revealObserver.observe(n));
+  items.forEach((n) => io.observe(n));
 }
 
-function forceShow(root) {
-  if (!root) return;
-  root.querySelectorAll(".reveal").forEach(el => el.classList.add("show"));
-}
-
+/* -----------------------------
+   Orb motion
+----------------------------- */
 function orbMotion() {
   const orb = document.getElementById("orb");
   if (!orb) return;
@@ -159,6 +209,9 @@ function orbMotion() {
   });
 }
 
+/* -----------------------------
+   Tilt cards
+----------------------------- */
 function tiltCards() {
   const cards = document.querySelectorAll(".tilt");
   if (!cards.length) return;
@@ -180,12 +233,15 @@ function tiltCards() {
     e.currentTarget.style.transform = "";
   }
 
-  cards.forEach(c => {
+  cards.forEach((c) => {
     c.addEventListener("mousemove", onMove);
     c.addEventListener("mouseleave", onLeave);
   });
 }
 
+/* -----------------------------
+   Magnetic buttons (subtle)
+----------------------------- */
 function magneticButtons() {
   const els = document.querySelectorAll(".mag");
   if (!els.length) return;
@@ -193,7 +249,7 @@ function magneticButtons() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
 
-  els.forEach(el => {
+  els.forEach((el) => {
     let raf = 0;
     el.addEventListener("mousemove", (e) => {
       if (raf) return;
@@ -213,6 +269,9 @@ function magneticButtons() {
   });
 }
 
+/* -----------------------------
+   Magnetic folders
+----------------------------- */
 function magneticFolders() {
   const els = document.querySelectorAll(".folder");
   if (!els.length) return;
@@ -220,7 +279,7 @@ function magneticFolders() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
 
-  els.forEach(el => {
+  els.forEach((el) => {
     let raf = 0;
     el.addEventListener("mousemove", (e) => {
       if (raf) return;
@@ -238,9 +297,11 @@ function magneticFolders() {
   });
 }
 
-/**
- * Stable Approach scroll logic
- */
+/* -----------------------------
+   Stable Approach scroll logic
+   - Progress starts at first tick
+   - No early cycling before visible
+----------------------------- */
 function storyScroll() {
   const stepsWrap = document.getElementById("storySteps");
   const steps = Array.from(document.querySelectorAll("#storySteps .step"));
@@ -286,6 +347,7 @@ function storyScroll() {
     }
   }
 
+  // Start on first tick
   apply(0, false);
 
   let raf = 0;
@@ -329,147 +391,157 @@ function storyScroll() {
   tick();
 }
 
-/**
- * SAFEST POSSIBLE JSON LOADER:
- * - never wipes content unless JSON is successfully parsed
- * - logs useful errors
- */
+/* -----------------------------
+   Projects loader + render
+   - Populates Featured + Work folders from projects.json
+   - Links go directly to file/folder inside repo using path
+----------------------------- */
 async function loadProjects() {
-  const featuredRoot = document.getElementById("featuredGrid");
-  const workRoot = document.getElementById("foldersRoot");
+  const featuredGrid = document.getElementById("featuredGrid");
+  const foldersRoot = document.getElementById("foldersRoot");
 
-  // If you didn't add these IDs yet, just skip (keeps your HTML)
-  if (!featuredRoot || !workRoot) return;
-
-  const featuredBackup = featuredRoot.innerHTML;
-  const workBackup = workRoot.innerHTML;
+  // If your HTML doesn’t have these containers, don’t crash the page
+  if (!featuredGrid && !foldersRoot) return;
 
   try {
-    const res = await fetch("./projects.json?v=" + Date.now(), { cache: "no-store" });
-    if (!res.ok) throw new Error(`projects.json fetch failed: ${res.status} ${res.statusText}`);
-
+    // cache-bust so updates show immediately
+    const res = await fetch(`./projects.json?v=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`projects.json fetch failed: ${res.status}`);
     const data = await res.json();
-    if (!data) throw new Error("projects.json parsed but empty");
 
-    // Expecting:
-    // { githubPortfolioUrl, featured: [...], collections: [...] }
     const githubUrl = data.githubPortfolioUrl || "https://github.com/ColtenHargett/portfolio";
 
-    // Render Featured
-    if (Array.isArray(data.featured)) {
-      featuredRoot.innerHTML = data.featured.map(p => {
-        const tags = (p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
-        const href = p.url || githubUrl;
-        return `
-          <article class="feature reveal tilt">
-            <div class="feature-top">
-              <p class="feature-k">Featured project</p>
-              <h3 class="feature-h">${escapeHtml(p.title || "Project")}</h3>
-              <p class="feature-p">${escapeHtml(p.description || "")}</p>
-            </div>
-            <div class="feature-row">${tags}</div>
-            <div class="feature-actions">
-              <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See on GitHub</a>
-            </div>
-          </article>
+    /* ----- Featured ----- */
+    if (featuredGrid) {
+      const featured = Array.isArray(data.featured) ? data.featured : [];
+      featuredGrid.innerHTML = "";
+
+      for (const p of featured) {
+        const title = escapeHtml(p.title || "Project");
+        const desc = escapeHtml(p.description || "");
+        const tags = Array.isArray(p.tags) ? p.tags : [];
+        const href = p.url || githubLink(githubUrl, p.path);
+
+        const tagHtml = tags
+          .slice(0, 6)
+          .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+          .join("");
+
+        // One button only: "See writeup" (links to GitHub)
+        const card = document.createElement("article");
+        card.className = "feature reveal tilt";
+        card.innerHTML = `
+          <div class="feature-top">
+            <p class="feature-k">Featured project</p>
+            <h3 class="feature-h">${title}</h3>
+            <p class="feature-p">${desc}</p>
+          </div>
+
+          <div class="feature-row">
+            ${tagHtml}
+          </div>
+
+          <div class="feature-actions">
+            <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See writeup</a>
+          </div>
         `;
-      }).join("");
+        featuredGrid.appendChild(card);
+      }
     }
 
-    // Render Work folders
-    if (Array.isArray(data.collections)) {
-      workRoot.innerHTML = data.collections.map(col => {
-        const items = (col.items || []).map(item => {
-          const tags = (item.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
-          const link = item.url || githubUrl;
-          const bullets = (item.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join("");
+    /* ----- Work folders ----- */
+    if (foldersRoot) {
+      const collections = Array.isArray(data.collections) ? data.collections : [];
+      foldersRoot.innerHTML = "";
 
-          return `
-            <article class="card tilt">
-              <h3 class="h3">${escapeHtml(item.title || "Project")}</h3>
-              ${item.sub ? `<p class="sub">${escapeHtml(item.sub)}</p>` : ""}
-              ${bullets ? `<ul class="bullets">${bullets}</ul>` : ""}
-              <div class="row">
-                ${tags}
-                <a class="mini mag" href="${link}" target="_blank" rel="noreferrer">View on GitHub</a>
-              </div>
-            </article>
-          `;
-        }).join("");
+      for (const col of collections) {
+        const colId = escapeHtml(col.id || "");
+        const icon = escapeHtml(col.icon || "▢");
+        const title = escapeHtml(col.title || "Collection");
+        const subtitle = escapeHtml(col.subtitle || "");
+        const items = Array.isArray(col.items) ? col.items : [];
 
-        return `
-          <details class="folder reveal" id="${escapeAttr(col.id || "")}">
-            <summary class="folder-head">
-              <div class="folder-left">
-                <span class="folder-icon" aria-hidden="true">${escapeHtml(col.icon || "▢")}</span>
-                <div>
-                  <p class="folder-title">${escapeHtml(col.title || "Collection")}</p>
-                  <p class="folder-sub">${escapeHtml(col.subtitle || "")}</p>
+        const details = document.createElement("details");
+        details.className = "folder reveal";
+        if (colId) details.id = colId;
+
+        // Build cards inside
+        const cardsHtml = items
+          .map((item) => {
+            const itTitle = escapeHtml(item.title || "Project");
+            const itSub = escapeHtml(item.sub || "");
+            const itTags = Array.isArray(item.tags) ? item.tags : [];
+            const itHref = item.url || githubLink(githubUrl, item.path);
+
+            const tagsHtml = itTags
+              .slice(0, 6)
+              .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+              .join("");
+
+            return `
+              <article class="card tilt">
+                <h3 class="h3">${itTitle}</h3>
+                <p class="sub">${itSub}</p>
+                <div class="row">
+                  ${tagsHtml}
+                  <a class="mini mag" href="${itHref}" target="_blank" rel="noreferrer">See on GitHub</a>
                 </div>
-              </div>
-              <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
-            </summary>
-            <div class="folder-body">
-              <div class="cards">
-                ${items}
+              </article>
+            `;
+          })
+          .join("");
+
+        details.innerHTML = `
+          <summary class="folder-head">
+            <div class="folder-left">
+              <span class="folder-icon" aria-hidden="true">${icon}</span>
+              <div>
+                <p class="folder-title">${title}</p>
+                <p class="folder-sub">${subtitle}</p>
               </div>
             </div>
-          </details>
+            <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+          </summary>
+
+          <div class="folder-body">
+            <div class="cards">
+              ${cardsHtml || `<p class="muted">No projects listed yet.</p>`}
+            </div>
+          </div>
         `;
-      }).join("");
+
+        foldersRoot.appendChild(details);
+      }
     }
 
-    // Make sure new elements are visible + interactive
+    // Re-run reveal observers for newly injected nodes
     revealOnScroll();
-    forceShow(featuredRoot);
-    forceShow(workRoot);
+
+    // Re-attach tilt/magnetic effects to newly injected nodes
     tiltCards();
     magneticButtons();
     magneticFolders();
-
   } catch (err) {
-    console.error("[Portfolio] Failed to load projects.json", err);
-
-    // Restore your old HTML so the page doesn't look empty
-    featuredRoot.innerHTML = featuredBackup;
-    workRoot.innerHTML = workBackup;
-
-    // Ensure restored content isn't invisible
-    forceShow(featuredRoot);
-    forceShow(workRoot);
+    // Fail gracefully (don’t blank the page)
+    console.error(err);
   }
 }
 
-function escapeHtml(s) {
-  return String(s ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function escapeAttr(s) {
-  return String(s ?? "").replaceAll('"', "");
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
+/* -----------------------------
+   Boot
+----------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
   setYear();
   mobileMenu();
   spotlight();
   topProgress();
   headerBlur();
   parallaxHero();
-
-  // Setup reveal for initial DOM
   revealOnScroll();
-
   orbMotion();
   tiltCards();
   magneticButtons();
   magneticFolders();
   storyScroll();
-
-  // Load JSON projects (doesn't break page if it fails)
-  await loadProjects();
+  loadProjects();
 });
