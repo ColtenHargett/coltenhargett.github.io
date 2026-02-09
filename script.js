@@ -629,7 +629,40 @@ function codeCanvas() {
     seed();
   }, { passive: true });
 }
+function emailCopyUX() {
+  const links = document.querySelectorAll("[data-copy]");
+  if (!links.length) return;
 
+  // simple toast
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
+  document.body.appendChild(toast);
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove("show"), 1400);
+  }
+
+  links.forEach((a) => {
+    a.addEventListener("click", async (e) => {
+      // Try to copy first (feels instant). Still allow mailto to open.
+      const text = a.getAttribute("data-copy");
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("Email copied");
+      } catch {
+        // fallback: do nothing (mailto still works)
+        showToast("Couldn’t copy — opening email");
+      }
+    });
+  });
+}
 /* -----------------------------
    Boot
 ----------------------------- */
@@ -639,6 +672,7 @@ document.addEventListener("DOMContentLoaded", () => {
   spotlight();
   topProgress();
   headerBlur();
+   emailCopyUX();
   parallaxHero();
   revealOnScroll();
   tiltCards();
