@@ -429,6 +429,13 @@ a:hover{ text-decoration:underline; }
   box-shadow: 0 14px 60px rgba(0,0,0,.06);
 }
 .c-card:hover{ text-decoration:none; background: rgba(11,12,15,.02); }
+.c-card.email-copy {
+  cursor: pointer;
+}
+
+.c-card.email-copy:active {
+  transform: scale(.995);
+}
 .label{ margin:0 0 6px; color: rgba(11,12,15,.55); letter-spacing:.16em; text-transform:uppercase; font-size:11px; }
 .value{ margin:0; font-weight:760; letter-spacing:-.01em; }
 .arrow{ color: rgba(11,12,15,.55); font-size:18px; }
