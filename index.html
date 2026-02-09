@@ -84,9 +84,9 @@
           </p>
         </div>
 
-        <!-- Living Code Lens (replaces orb) -->
+        <!-- LIVING CODE LENS (replaces orb) -->
         <aside class="orb-wrap reveal" aria-label="Living code lens">
-          <div class="lens-chip">Currently building: AI agents + data pipelines</div>
+          <div class="lens-chip">Currently building: agents + data pipelines</div>
 
           <div class="lens" id="lens">
             <canvas class="lens-canvas" id="lensCanvas" width="520" height="520"></canvas>
@@ -99,7 +99,7 @@
       </div>
     </section>
 
-    <!-- FEATURED (renders from projects.json) -->
+    <!-- FEATURED (loaded from projects.json) -->
     <section class="section featured" id="featured" aria-label="Featured projects">
       <div class="wrap">
         <header class="head reveal">
@@ -107,7 +107,9 @@
           <p class="muted">The work I’d show first in an interview.</p>
         </header>
 
-        <div class="featured-grid" id="featuredGrid" aria-live="polite"></div>
+        <div class="featured-grid" id="featuredGrid">
+          <!-- populated by script.js -->
+        </div>
       </div>
     </section>
 
@@ -119,10 +121,12 @@
           <p class="muted">Organized into collections. Open a folder to browse.</p>
         </header>
 
-        <div class="folders" id="folders" aria-live="polite"></div>
+        <div class="folders" id="folders">
+          <!-- populated by script.js -->
+        </div>
 
         <p class="muted note reveal">
-          Tip: link directly to a collection like <span class="mono">#collection-python</span>.
+          Tip: link directly to a collection like <span class="mono">#collection-ai</span>.
         </p>
       </div>
     </section>
