@@ -84,19 +84,18 @@
           </p>
         </div>
 
-        <!-- LIVING CODE LENS (replaces orb) -->
-        <aside class="orb-wrap reveal" aria-label="Living code lens">
-  <div class="lens" id="lens">
-    <canvas class="lens-canvas" id="lensCanvas"></canvas>
-    <div class="lens-vignette" aria-hidden="true"></div>
-    <div class="lens-sheen" aria-hidden="true"></div>
-  </div>
-  <p class="orb-caption">Living code lens. Scroll = drift · Cursor = pull.</p>
-</aside>
+        <!-- Living code canvas (replaces orb) -->
+        <aside class="code-wrap reveal" aria-label="Living code canvas">
+          <div class="code-shell tilt" id="codeShell">
+            <canvas class="code-canvas" id="codeCanvas" aria-hidden="true"></canvas>
+            <div class="code-glass" aria-hidden="true"></div>
+          </div>
+          <p class="code-caption">Living code surface. Scroll + cursor-reactive.</p>
+        </aside>
       </div>
     </section>
 
-    <!-- FEATURED (loaded from projects.json) -->
+    <!-- FEATURED -->
     <section class="section featured" id="featured" aria-label="Featured projects">
       <div class="wrap">
         <header class="head reveal">
@@ -104,9 +103,8 @@
           <p class="muted">The work I’d show first in an interview.</p>
         </header>
 
-        <div class="featured-grid" id="featuredGrid">
-          <!-- populated by script.js -->
-        </div>
+        <!-- populated by projects.json -->
+        <div class="featured-grid" id="featuredGrid"></div>
       </div>
     </section>
 
@@ -118,12 +116,11 @@
           <p class="muted">Organized into collections. Open a folder to browse.</p>
         </header>
 
-        <div class="folders" id="folders">
-          <!-- populated by script.js -->
-        </div>
+        <!-- populated by projects.json -->
+        <div class="folders" id="foldersRoot"></div>
 
         <p class="muted note reveal">
-          Tip: link directly to a collection like <span class="mono">#collection-ai</span>.
+          Tip: link directly to a collection like <span class="mono">#collection-java</span>.
         </p>
       </div>
     </section>
