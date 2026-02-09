@@ -85,13 +85,18 @@
         </div>
 
         <!-- Living code canvas (replaces orb) -->
-        <aside class="code-wrap reveal" aria-label="Living code canvas">
-          <div class="code-shell tilt" id="codeShell">
-            <canvas class="code-canvas" id="codeCanvas" aria-hidden="true"></canvas>
-            <div class="code-glass" aria-hidden="true"></div>
-          </div>
-          <p class="code-caption">Living code surface. Scroll + cursor-reactive.</p>
-        </aside>
+        <!-- Living Code Lens -->
+<aside class="lens-wrap reveal" aria-label="Living code lens">
+  <div class="lens-chip">Currently building: AI agents + data pipelines</div>
+
+  <div class="lens" id="lens" aria-hidden="true">
+    <canvas class="lens-canvas" id="lensCanvas" width="520" height="520"></canvas>
+    <div class="lens-rim" aria-hidden="true"></div>
+    <div class="lens-spec" aria-hidden="true"></div>
+  </div>
+
+  <p class="lens-caption">Living code lens. Scroll = drift · Cursor = pull.</p>
+</aside>
       </div>
     </section>
 
