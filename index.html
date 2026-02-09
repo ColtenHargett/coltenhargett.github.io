@@ -84,23 +84,22 @@
           </p>
         </div>
 
-        <!-- Living code canvas (replaces orb) -->
-        <!-- Living Code Lens -->
-<aside class="lens-wrap reveal" aria-label="Living code lens">
-  <div class="lens-chip">Currently building: AI agents + data pipelines</div>
+        <!-- Living Code Lens (replaces orb) -->
+        <aside class="orb-wrap reveal" aria-label="Living code lens">
+          <div class="lens-chip">Currently building: AI agents + data pipelines</div>
 
-  <div class="lens" id="lens" aria-hidden="true">
-    <canvas class="lens-canvas" id="lensCanvas" width="520" height="520"></canvas>
-    <div class="lens-rim" aria-hidden="true"></div>
-    <div class="lens-spec" aria-hidden="true"></div>
-  </div>
+          <div class="lens" id="lens">
+            <canvas class="lens-canvas" id="lensCanvas" width="520" height="520"></canvas>
+            <div class="lens-rim" aria-hidden="true"></div>
+            <div class="lens-spec" aria-hidden="true"></div>
+          </div>
 
-  <p class="lens-caption">Living code lens. Scroll = drift · Cursor = pull.</p>
-</aside>
+          <p class="orb-caption">Living code lens. Scroll = drift · Cursor = pull.</p>
+        </aside>
       </div>
     </section>
 
-    <!-- FEATURED -->
+    <!-- FEATURED (renders from projects.json) -->
     <section class="section featured" id="featured" aria-label="Featured projects">
       <div class="wrap">
         <header class="head reveal">
@@ -108,8 +107,7 @@
           <p class="muted">The work I’d show first in an interview.</p>
         </header>
 
-        <!-- populated by projects.json -->
-        <div class="featured-grid" id="featuredGrid"></div>
+        <div class="featured-grid" id="featuredGrid" aria-live="polite"></div>
       </div>
     </section>
 
@@ -121,11 +119,10 @@
           <p class="muted">Organized into collections. Open a folder to browse.</p>
         </header>
 
-        <!-- populated by projects.json -->
-        <div class="folders" id="foldersRoot"></div>
+        <div class="folders" id="folders" aria-live="polite"></div>
 
         <p class="muted note reveal">
-          Tip: link directly to a collection like <span class="mono">#collection-java</span>.
+          Tip: link directly to a collection like <span class="mono">#collection-python</span>.
         </p>
       </div>
     </section>
