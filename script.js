@@ -1,7 +1,7 @@
 function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
 /* -----------------------------
-   Small utilities
+   Utilities
 ----------------------------- */
 function escapeHtml(s) {
   return String(s ?? "")
@@ -13,7 +13,6 @@ function escapeHtml(s) {
 }
 
 function isFilePath(p) {
-  // Treat anything with an extension as a file (works well for your repo)
   return /\.[a-z0-9]+$/i.test(String(p || "").trim());
 }
 
@@ -24,8 +23,6 @@ function githubLink(repoUrl, path) {
 
   const cleanPath = String(path).replace(/^\/+/, "");
   const kind = isFilePath(cleanPath) ? "blob" : "tree";
-
-  // encodeURI keeps slashes, encodes spaces -> %20
   return `${cleanRepo}/${kind}/main/${encodeURI(cleanPath)}`;
 }
 
@@ -85,7 +82,7 @@ function spotlight() {
 }
 
 /* -----------------------------
-   Top scroll progress bar
+   Top progress bar
 ----------------------------- */
 function topProgress() {
   const bar = document.getElementById("topProgress");
@@ -135,14 +132,10 @@ function parallaxHero() {
     hero.style.setProperty("--heroParallax", `${y}px`);
   }
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (raf) return;
-      raf = requestAnimationFrame(tick);
-    },
-    { passive: true }
-  );
+  window.addEventListener("scroll", () => {
+    if (raf) return;
+    raf = requestAnimationFrame(tick);
+  }, { passive: true });
 
   tick();
 }
@@ -154,59 +147,16 @@ function revealOnScroll() {
   const items = Array.from(document.querySelectorAll(".reveal"));
   if (!items.length) return;
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const ent of entries) {
-        if (ent.isIntersecting) {
-          ent.target.classList.add("show");
-          io.unobserve(ent.target);
-        }
+  const io = new IntersectionObserver((entries) => {
+    for (const ent of entries) {
+      if (ent.isIntersecting) {
+        ent.target.classList.add("show");
+        io.unobserve(ent.target);
       }
-    },
-    { threshold: 0.14 }
-  );
+    }
+  }, { threshold: 0.14 });
 
-  items.forEach((n) => io.observe(n));
-}
-
-/* -----------------------------
-   Orb motion
------------------------------ */
-function orbMotion() {
-  const orb = document.getElementById("orb");
-  if (!orb) return;
-
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce) return;
-
-  let raf = 0;
-
-  window.addEventListener("mousemove", (e) => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      const r = orb.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-
-      const dx = clamp((e.clientX - cx) / r.width, -0.65, 0.65);
-      const dy = clamp((e.clientY - cy) / r.height, -0.65, 0.65);
-
-      const rx = (-dy * 14).toFixed(2);
-      const ry = (dx * 16).toFixed(2);
-      orb.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
-
-      const mx = ((dx + 0.65) / 1.3) * 100;
-      const my = ((dy + 0.65) / 1.3) * 100;
-      orb.style.setProperty("--mx", `${mx}%`);
-      orb.style.setProperty("--my", `${my}%`);
-
-      raf = 0;
-    });
-  });
-
-  window.addEventListener("mouseleave", () => {
-    orb.style.transform = "";
-  });
+  items.forEach(n => io.observe(n));
 }
 
 /* -----------------------------
@@ -233,14 +183,14 @@ function tiltCards() {
     e.currentTarget.style.transform = "";
   }
 
-  cards.forEach((c) => {
+  cards.forEach(c => {
     c.addEventListener("mousemove", onMove);
     c.addEventListener("mouseleave", onLeave);
   });
 }
 
 /* -----------------------------
-   Magnetic buttons (subtle)
+   Magnetic buttons
 ----------------------------- */
 function magneticButtons() {
   const els = document.querySelectorAll(".mag");
@@ -249,7 +199,7 @@ function magneticButtons() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
 
-  els.forEach((el) => {
+  els.forEach(el => {
     let raf = 0;
     el.addEventListener("mousemove", (e) => {
       if (raf) return;
@@ -279,7 +229,7 @@ function magneticFolders() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
 
-  els.forEach((el) => {
+  els.forEach(el => {
     let raf = 0;
     el.addEventListener("mousemove", (e) => {
       if (raf) return;
@@ -299,8 +249,6 @@ function magneticFolders() {
 
 /* -----------------------------
    Stable Approach scroll logic
-   - Progress starts at first tick
-   - No early cycling before visible
 ----------------------------- */
 function storyScroll() {
   const stepsWrap = document.getElementById("storySteps");
@@ -347,7 +295,6 @@ function storyScroll() {
     }
   }
 
-  // Start on first tick
   apply(0, false);
 
   let raf = 0;
@@ -393,29 +340,20 @@ function storyScroll() {
 
 /* -----------------------------
    Projects loader + render
-   - Populates Featured + Work folders from projects.json
-   - Links go directly to file/folder inside repo using path
 ----------------------------- */
-function pickPath(obj) {
-  // Accept a few common key names so you don't have to fight JSON formatting
-  return obj?.path || obj?.repoPath || obj?.folder || obj?.file || obj?.projectPath || "";
-}
 async function loadProjects() {
   const featuredGrid = document.getElementById("featuredGrid");
   const foldersRoot = document.getElementById("foldersRoot");
-
-  // If your HTML doesn’t have these containers, don’t crash the page
   if (!featuredGrid && !foldersRoot) return;
 
   try {
-    // cache-bust so updates show immediately
     const res = await fetch(`./projects.json?v=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) throw new Error(`projects.json fetch failed: ${res.status}`);
     const data = await res.json();
 
     const githubUrl = data.githubPortfolioUrl || "https://github.com/ColtenHargett/portfolio";
 
-    /* ----- Featured ----- */
+    /* Featured */
     if (featuredGrid) {
       const featured = Array.isArray(data.featured) ? data.featured : [];
       featuredGrid.innerHTML = "";
@@ -424,16 +362,14 @@ async function loadProjects() {
         const title = escapeHtml(p.title || "Project");
         const desc = escapeHtml(p.description || "");
         const tags = Array.isArray(p.tags) ? p.tags : [];
-        const pPath = pickPath(p);
-         const href = p.url || githubLink(githubUrl, pPath);
-         if (!p.url && !pPath) console.warn("[Featured missing path/url]", p);
+        const href = p.url || githubLink(githubUrl, p.path);
 
-        const tagHtml = tags
-          .slice(0, 6)
+        if (!p.url && !p.path) console.warn("[Featured missing path/url]", p);
+
+        const tagHtml = tags.slice(0, 6)
           .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
           .join("");
 
-        // One button only: "See writeup" (links to GitHub)
         const card = document.createElement("article");
         card.className = "feature reveal tilt";
         card.innerHTML = `
@@ -455,7 +391,7 @@ async function loadProjects() {
       }
     }
 
-    /* ----- Work folders ----- */
+    /* Work / Collections */
     if (foldersRoot) {
       const collections = Array.isArray(data.collections) ? data.collections : [];
       foldersRoot.innerHTML = "";
@@ -471,33 +407,29 @@ async function loadProjects() {
         details.className = "folder reveal";
         if (colId) details.id = colId;
 
-        // Build cards inside
-        const cardsHtml = items
-          .map((item) => {
-            const itTitle = escapeHtml(item.title || "Project");
-            const itSub = escapeHtml(item.sub || "");
-            const itTags = Array.isArray(item.tags) ? item.tags : [];
-            const itPath = pickPath(item); 
-             const itHref = item.url || githubLink(githubUrl, itPath); 
-             if (!item.url && !itPath) console.warn("[Item missing path/url]", item);
+        const cardsHtml = items.map((item) => {
+          const itTitle = escapeHtml(item.title || "Project");
+          const itSub = escapeHtml(item.sub || "");
+          const itTags = Array.isArray(item.tags) ? item.tags : [];
+          const itHref = item.url || githubLink(githubUrl, item.path);
 
-            const tagsHtml = itTags
-              .slice(0, 6)
-              .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
-              .join("");
+          if (!item.url && !item.path) console.warn("[Item missing path/url]", item);
 
-            return `
-              <article class="card tilt">
-                <h3 class="h3">${itTitle}</h3>
-                <p class="sub">${itSub}</p>
-                <div class="row">
-                  ${tagsHtml}
-                  <a class="mini mag" href="${itHref}" target="_blank" rel="noreferrer">See on GitHub</a>
-                </div>
-              </article>
-            `;
-          })
-          .join("");
+          const tagsHtml = itTags.slice(0, 6)
+            .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+            .join("");
+
+          return `
+            <article class="card tilt">
+              <h3 class="h3">${itTitle}</h3>
+              <p class="sub">${itSub}</p>
+              <div class="row">
+                ${tagsHtml}
+                <a class="mini mag" href="${itHref}" target="_blank" rel="noreferrer">See on GitHub</a>
+              </div>
+            </article>
+          `;
+        }).join("");
 
         details.innerHTML = `
           <summary class="folder-head">
@@ -522,17 +454,180 @@ async function loadProjects() {
       }
     }
 
-    // Re-run reveal observers for newly injected nodes
+    // Re-run effects for injected DOM
     revealOnScroll();
-
-    // Re-attach tilt/magnetic effects to newly injected nodes
     tiltCards();
     magneticButtons();
     magneticFolders();
+
   } catch (err) {
-    // Fail gracefully (don’t blank the page)
     console.error(err);
   }
+}
+
+/* -----------------------------
+   Living Code Canvas (Option 1)
+----------------------------- */
+function codeCanvas() {
+  const canvas = document.getElementById("codeCanvas");
+  const shell = document.getElementById("codeShell");
+  if (!canvas || !shell) return;
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return;
+
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    canvas.width = Math.floor(r.width * dpr);
+    canvas.height = Math.floor(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  const lines = [
+    "def normalize(data):",
+    "return clean(data)",
+    "for symbol in market:",
+    "score = model(x)",
+    "if invalid: continue",
+    "parse → validate → emit",
+    "state = next(state)",
+    "O(n) scan, low memory",
+    "defensive by default",
+    "predictable outputs",
+    "agent.run(context)",
+    "summarize(changes)"
+  ];
+
+  const fragments = [];
+  const fragCount = reduce ? 0 : 22;
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function seed() {
+    fragments.length = 0;
+    if (reduce) return;
+
+    const r = canvas.getBoundingClientRect();
+    for (let i = 0; i < fragCount; i++) {
+      fragments.push({
+        text: lines[i % lines.length],
+        x: rand(40, r.width - 40),
+        y: rand(50, r.height - 50),
+        vx: rand(-0.12, 0.12),
+        vy: rand(-0.10, 0.10),
+        size: rand(11, 13.5),
+        alpha: rand(0.10, 0.22),
+        phase: rand(0, Math.PI * 2)
+      });
+    }
+  }
+
+  let mouse = { x: 0.5, y: 0.45, active: false };
+  let raf = 0;
+
+  shell.addEventListener("mousemove", (e) => {
+    mouse.active = true;
+    const r = shell.getBoundingClientRect();
+    mouse.x = clamp((e.clientX - r.left) / r.width, 0, 1);
+    mouse.y = clamp((e.clientY - r.top) / r.height, 0, 1);
+
+    const mx = mouse.x * 100;
+    const my = mouse.y * 100;
+    shell.style.setProperty("--mx", `${mx}%`);
+    shell.style.setProperty("--my", `${my}%`);
+  });
+
+  shell.addEventListener("mouseleave", () => {
+    mouse.active = false;
+    shell.style.removeProperty("--mx");
+    shell.style.removeProperty("--my");
+  });
+
+  function draw(t) {
+    raf = 0;
+    const r = canvas.getBoundingClientRect();
+    const w = r.width;
+    const h = r.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // soft wash
+    const g = ctx.createRadialGradient(w * 0.35, h * 0.25, 20, w * 0.55, h * 0.60, Math.max(w, h) * 0.75);
+    g.addColorStop(0, "rgba(255,255,255,0.20)");
+    g.addColorStop(1, "rgba(255,255,255,0.00)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    if (reduce) return;
+
+    const scroll = window.scrollY || 0;
+    const scrollPhase = scroll * 0.0012;
+
+    ctx.save();
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i < fragments.length; i++) {
+      const f = fragments[i];
+
+      f.x += f.vx;
+      f.y += f.vy;
+
+      const breathe = Math.sin(t * 0.001 + f.phase + scrollPhase) * 0.6;
+
+      if (mouse.active) {
+        const tx = mouse.x * w;
+        const ty = mouse.y * h;
+        const dx = tx - f.x;
+        const dy = ty - f.y;
+        const dist = Math.max(40, Math.hypot(dx, dy));
+        const pull = 10 / dist;
+        f.x += dx * pull * 0.03;
+        f.y += dy * pull * 0.03;
+      }
+
+      if (f.x < -60) f.x = w + 60;
+      if (f.x > w + 60) f.x = -60;
+      if (f.y < -40) f.y = h + 40;
+      if (f.y > h + 40) f.y = -40;
+
+      const alpha = clamp(f.alpha + breathe * 0.03, 0.06, 0.28);
+      const useA = (i % 2) === 0;
+
+      ctx.font = `${f.size}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`;
+      ctx.fillStyle = useA
+        ? `rgba(109,94,252,${alpha})`
+        : `rgba(0,194,168,${alpha})`;
+
+      ctx.shadowColor = "rgba(0,0,0,0.10)";
+      ctx.shadowBlur = 6;
+
+      ctx.fillText(f.text, f.x, f.y);
+    }
+
+    ctx.restore();
+  }
+
+  function loop(t) {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      draw(t);
+      loop(t + 16);
+    });
+  }
+
+  resize();
+  seed();
+
+  if (!reduce) loop(performance.now());
+  else draw(performance.now());
+
+  window.addEventListener("resize", () => {
+    resize();
+    seed();
+  }, { passive: true });
 }
 
 /* -----------------------------
@@ -546,10 +641,10 @@ document.addEventListener("DOMContentLoaded", () => {
   headerBlur();
   parallaxHero();
   revealOnScroll();
-  orbMotion();
   tiltCards();
   magneticButtons();
   magneticFolders();
   storyScroll();
   loadProjects();
+  codeCanvas();
 });
