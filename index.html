@@ -15,10 +15,12 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
+  <!-- top scroll progress (subtle) -->
   <div class="top-progress" aria-hidden="true">
     <span class="top-progress-bar" id="topProgress"></span>
   </div>
 
+  <!-- cursor spotlight (soft, optional) -->
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
   <header class="nav" id="siteHeader">
@@ -68,7 +70,7 @@
 
           <div class="actions reveal">
             <a class="btn mag" href="#featured">Explore</a>
-            <a class="btn ghost mag" href="./Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+            <a class="btn ghost mag" href="./resume.pdf" target="_blank" rel="noreferrer">Resume</a>
           </div>
 
           <div class="meta reveal">
@@ -78,18 +80,18 @@
           </div>
 
           <p class="note muted reveal">
-            Everything here links to my GitHub portfolio repo.
+            Some work is private to protect coursework. I can share code, demos, or walkthroughs on request.
           </p>
         </div>
 
-          <!-- living code canvas -->
-    <aside class="code-wrap reveal" aria-label="Living code canvas">
-    <div class="code-shell tilt" id="codeShell">
-      <canvas class="code-canvas" id="codeCanvas" aria-hidden="true"></canvas>
-      <div class="code-glass" aria-hidden="true"></div>
-    </div>
-    <p class="code-caption">Living code surface. Scroll + cursor-reactive.</p>
-  </aside>
+        <!-- Living code canvas (replaces orb) -->
+        <aside class="code-wrap reveal" aria-label="Living code canvas">
+          <div class="code-shell tilt" id="codeShell">
+            <canvas class="code-canvas" id="codeCanvas" aria-hidden="true"></canvas>
+            <div class="code-glass" aria-hidden="true"></div>
+          </div>
+          <p class="code-caption">Living code surface. Scroll + cursor-reactive.</p>
+        </aside>
       </div>
     </section>
 
@@ -99,14 +101,10 @@
         <header class="head reveal">
           <h2 class="h2">Featured</h2>
           <p class="muted">The work I’d show first in an interview.</p>
-
-          <div class="actions" style="margin-top:12px">
-            <a class="btn small ghost mag" id="repoBtnFeatured" href="#" target="_blank" rel="noreferrer">GitHub Portfolio</a>
-          </div>
         </header>
 
-        <!-- Filled by JS from projects.json -->
-        <div class="featured-grid" id="featuredGrid">
+        <!-- populated by projects.json -->
+        <div class="featured-grid" id="featuredGrid"></div>
       </div>
     </section>
 
@@ -116,17 +114,13 @@
         <header class="head reveal">
           <h2 class="h2">Work</h2>
           <p class="muted">Organized into collections. Open a folder to browse.</p>
-
-          <div class="actions" style="margin-top:12px">
-            <a class="btn small ghost mag" id="repoBtnWork" href="#" target="_blank" rel="noreferrer">GitHub Portfolio</a>
-          </div>
         </header>
 
-        <!-- Filled by JS from projects.json -->
-        <div class="folders" id="foldersRoot">
+        <!-- populated by projects.json -->
+        <div class="folders" id="foldersRoot"></div>
 
         <p class="muted note reveal">
-          Tip: link directly to a collection like <span class="mono">#collection-python</span>.
+          Tip: link directly to a collection like <span class="mono">#collection-java</span>.
         </p>
       </div>
     </section>
@@ -193,7 +187,7 @@
         </div>
 
         <p class="note muted reveal">
-          Everything in Featured/Work links directly to GitHub.
+          Some projects are private to protect coursework. I can share code, demos, or walkthroughs on request.
         </p>
       </div>
     </section>
