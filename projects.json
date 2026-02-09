@@ -17,8 +17,8 @@
   "collections": [
     {
       "id": "collection-python",
-      "icon": "◉",
-      "title": "Python",
+  "icon": "python",
+  "title": "Python",
       "subtitle": "Scripts, analyzers, and small tools.",
       "items": [
         {
@@ -73,8 +73,8 @@
     },
     {
       "id": "collection-java",
-      "icon": "⌘",
-      "title": "Java",
+  "icon": "java",
+  "title": "Java",
       "subtitle": "Coursework projects and exercises.",
       "items": [
         {
@@ -105,8 +105,8 @@
     },
     {
       "id": "collection-ai",
-      "icon": "▢",
-      "title": "AI",
+  "icon": "ai",
+  "title": "AI",
       "subtitle": "Agents, pipelines, and applied AI tools.",
       "items": [
         {
