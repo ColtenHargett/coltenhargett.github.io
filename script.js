@@ -1,155 +1,10 @@
 function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
-/* -----------------------------
-   Utilities
------------------------------ */
-function escapeHtml(s) {
-  return String(s ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-function livingCodeLens() {
-  const lens = document.getElementById("lens");
-  const canvas = document.getElementById("lensCanvas");
-  if (!lens || !canvas) return;
-
-  const ctx = canvas.getContext("2d");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Code lines to render (short, readable, “you”)
-  const lines = [
-    "for symbol in market:",
-    "  raw = fetch(symbol)",
-    "  if invalid(raw): continue",
-    "  data = normalize(raw)",
-    "  signal = score(data)",
-    "  emit(symbol, signal)",
-    "",
-    "agent = build_pipeline()",
-    "news = scrape(sources)",
-    "summary = synthesize(news)",
-    "store(summary)"
-  ];
-
-  function resize() {
-    const dpr = Math.max(1, window.devicePixelRatio || 1);
-    const size = 520; // keep consistent with HTML attrs
-    canvas.width = Math.floor(size * dpr);
-    canvas.height = Math.floor(size * dpr);
-    canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  resize();
-  window.addEventListener("resize", resize);
-
-  // Motion state
-  let mx = 0.5, my = 0.5;     // cursor normalized
-  let drift = 0;              // scroll drift
-  let t = 0;                  // animation time
-
-  // Cursor “pull” (updates specular highlight too)
-  let rafMove = 0;
-  window.addEventListener("mousemove", (e) => {
-    if (rafMove) return;
-    rafMove = requestAnimationFrame(() => {
-      const r = lens.getBoundingClientRect();
-      mx = clamp((e.clientX - r.left) / r.width, 0, 1);
-      my = clamp((e.clientY - r.top) / r.height, 0, 1);
-
-      lens.style.setProperty("--lx", `${mx * 100}%`);
-      lens.style.setProperty("--ly", `${my * 100}%`);
-      rafMove = 0;
-    });
-  });
-
-  function draw() {
-    const W = 520, H = 520;
-    ctx.clearRect(0, 0, W, H);
-
-    // Subtle background veil so code is readable but not harsh
-    ctx.fillStyle = "rgba(255,255,255,0.42)";
-    ctx.fillRect(0, 0, W, H);
-
-    // Typography
-    ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
-    ctx.textBaseline = "top";
-
-    // “pull” offsets: cursor + drift
-    const pullX = (mx - 0.5) * 22;
-    const pullY = (my - 0.5) * 22;
-
-    const baseX = 92 + pullX;
-    const baseY = 120 + pullY + drift;
-
-    // Draw with a tiny glow-like softness
-    for (let i = 0; i < lines.length; i++) {
-      const y = baseY + i * 18;
-      if (y < 60 || y > H - 60) continue;
-
-      // Alternate tint subtly (cool/warm) using your accent colors via rgba approximation
-      const tint = (i % 2 === 0)
-        ? "rgba(109,94,252,0.32)"
-        : "rgba(0,194,168,0.28)";
-
-      ctx.fillStyle = tint;
-      ctx.fillText(lines[i], baseX, y);
-    }
-
-    // Add a faint “scanline” to make it feel like a surface
-    ctx.fillStyle = "rgba(11,12,15,0.04)";
-    for (let y = 0; y < H; y += 4) {
-      ctx.fillRect(0, y, W, 1);
-    }
-  }
-
-  function tick() {
-    if (!reduce) {
-      t += 0.01;
-      // slow floating drift + scroll influence
-      const float = Math.sin(t) * 10;
-      const scroll = window.scrollY || 0;
-      drift = (scroll * 0.03) + float;
-    } else {
-      drift = 0;
-    }
-
-    draw();
-    requestAnimationFrame(tick);
-  }
-
-  tick();
-}
-
-function isFilePath(p) {
-  return /\.[a-z0-9]+$/i.test(String(p || "").trim());
-}
-
-function githubLink(repoUrl, path) {
-  if (!repoUrl) return "#";
-  const cleanRepo = repoUrl.replace(/\/$/, "");
-  if (!path) return cleanRepo;
-
-  const cleanPath = String(path).replace(/^\/+/, "");
-  const kind = isFilePath(cleanPath) ? "blob" : "tree";
-  return `${cleanRepo}/${kind}/main/${encodeURI(cleanPath)}`;
-}
-
-/* -----------------------------
-   Footer year
------------------------------ */
 function setYear() {
   const y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 }
 
-/* -----------------------------
-   Mobile menu
------------------------------ */
 function mobileMenu() {
   const btn = document.getElementById("menuBtn");
   const menu = document.getElementById("mobileMenu");
@@ -171,9 +26,6 @@ function mobileMenu() {
   });
 }
 
-/* -----------------------------
-   Spotlight
------------------------------ */
 function spotlight() {
   const el = document.getElementById("spotlight");
   if (!el) return;
@@ -194,9 +46,6 @@ function spotlight() {
   });
 }
 
-/* -----------------------------
-   Top progress bar
------------------------------ */
 function topProgress() {
   const bar = document.getElementById("topProgress");
   if (!bar) return;
@@ -213,9 +62,6 @@ function topProgress() {
   tick();
 }
 
-/* -----------------------------
-   Header blur on scroll
------------------------------ */
 function headerBlur() {
   const header = document.getElementById("siteHeader");
   if (!header) return;
@@ -228,9 +74,6 @@ function headerBlur() {
   tick();
 }
 
-/* -----------------------------
-   Hero parallax
------------------------------ */
 function parallaxHero() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
@@ -253,9 +96,6 @@ function parallaxHero() {
   tick();
 }
 
-/* -----------------------------
-   Reveal on scroll
------------------------------ */
 function revealOnScroll() {
   const items = Array.from(document.querySelectorAll(".reveal"));
   if (!items.length) return;
@@ -272,9 +112,6 @@ function revealOnScroll() {
   items.forEach(n => io.observe(n));
 }
 
-/* -----------------------------
-   Tilt cards
------------------------------ */
 function tiltCards() {
   const cards = document.querySelectorAll(".tilt");
   if (!cards.length) return;
@@ -302,9 +139,6 @@ function tiltCards() {
   });
 }
 
-/* -----------------------------
-   Magnetic buttons
------------------------------ */
 function magneticButtons() {
   const els = document.querySelectorAll(".mag");
   if (!els.length) return;
@@ -332,9 +166,6 @@ function magneticButtons() {
   });
 }
 
-/* -----------------------------
-   Magnetic folders
------------------------------ */
 function magneticFolders() {
   const els = document.querySelectorAll(".folder");
   if (!els.length) return;
@@ -360,9 +191,10 @@ function magneticFolders() {
   });
 }
 
-/* -----------------------------
-   Stable Approach scroll logic
------------------------------ */
+/**
+ * Stable Approach scroll logic
+ * Progress bar starts at first tick automatically.
+ */
 function storyScroll() {
   const stepsWrap = document.getElementById("storySteps");
   const steps = Array.from(document.querySelectorAll("#storySteps .step"));
@@ -451,301 +283,220 @@ function storyScroll() {
   tick();
 }
 
-/* -----------------------------
-   Projects loader + render
------------------------------ */
-async function loadProjects() {
-  const featuredGrid = document.getElementById("featuredGrid");
-  const foldersRoot = document.getElementById("foldersRoot");
-  if (!featuredGrid && !foldersRoot) return;
+/* ----------------------------
+   LIVING CODE LENS (ORB REPLACEMENT)
+---------------------------- */
+function livingCodeLens() {
+  const lens = document.getElementById("lens");
+  const canvas = document.getElementById("lensCanvas");
+  if (!lens || !canvas) return;
 
+  const ctx = canvas.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const lines = [
+    "for symbol in market:",
+    "  raw = fetch(symbol)",
+    "  if invalid(raw): continue",
+    "  data = normalize(raw)",
+    "  signal = score(data)",
+    "  emit(symbol, signal)",
+    "",
+    "agent = build_pipeline()",
+    "news = scrape(sources)",
+    "summary = synthesize(news)",
+    "store(summary)"
+  ];
+
+  function resize() {
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const size = 520;
+    canvas.width = Math.floor(size * dpr);
+    canvas.height = Math.floor(size * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  let mx = 0.5, my = 0.5;
+  let drift = 0;
+  let t = 0;
+
+  let rafMove = 0;
+  window.addEventListener("mousemove", (e) => {
+    if (rafMove) return;
+    rafMove = requestAnimationFrame(() => {
+      const r = lens.getBoundingClientRect();
+      mx = clamp((e.clientX - r.left) / r.width, 0, 1);
+      my = clamp((e.clientY - r.top) / r.height, 0, 1);
+      lens.style.setProperty("--lx", `${mx * 100}%`);
+      lens.style.setProperty("--ly", `${my * 100}%`);
+      rafMove = 0;
+    });
+  });
+
+  function draw() {
+    const W = 520, H = 520;
+    ctx.clearRect(0, 0, W, H);
+
+    // soft paper wash
+    ctx.fillStyle = "rgba(255,255,255,0.40)";
+    ctx.fillRect(0, 0, W, H);
+
+    // subtle scanlines
+    ctx.fillStyle = "rgba(11,12,15,0.03)";
+    for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1);
+
+    ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+    ctx.textBaseline = "top";
+
+    const pullX = (mx - 0.5) * 22;
+    const pullY = (my - 0.5) * 22;
+
+    const baseX = 92 + pullX;
+    const baseY = 118 + pullY + drift;
+
+    for (let i = 0; i < lines.length; i++) {
+      const y = baseY + i * 18;
+      if (y < 60 || y > H - 60) continue;
+
+      const tint = (i % 2 === 0)
+        ? "rgba(109,94,252,0.32)"
+        : "rgba(0,194,168,0.28)";
+
+      ctx.fillStyle = tint;
+      ctx.fillText(lines[i], baseX, y);
+    }
+  }
+
+  function tick() {
+    if (!reduce) {
+      t += 0.01;
+      const float = Math.sin(t) * 9;
+      const scroll = window.scrollY || 0;
+      drift = (scroll * 0.03) + float;
+    } else {
+      drift = 0;
+    }
+
+    draw();
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+}
+
+/* ----------------------------
+   PROJECTS.JSON RENDERING
+---------------------------- */
+function safeJoinUrl(base, path) {
+  const cleanBase = String(base || "").replace(/\/+$/, "");
+  const cleanPath = String(path || "").replace(/^\/+/, "");
+  return cleanPath ? `${cleanBase}/${cleanPath}` : cleanBase;
+}
+
+function ensureTreePath(path) {
+  // Supports folder paths like "AI/News Summary Agent/" and files like "Python/Hangman.py"
+  // Always returns ".../tree/main/<path>" (works for files too in GitHub UI).
+  const base = "https://github.com/ColtenHargett/portfolio/tree/main";
+  return safeJoinUrl(base, encodeURI(path));
+}
+
+function tagHtml(tags) {
+  if (!tags || !tags.length) return "";
+  return tags.map(t => `<span class="tag">${t}</span>`).join("");
+}
+
+function renderFeatured(featured) {
+  const grid = document.getElementById("featuredGrid");
+  if (!grid) return;
+
+  grid.innerHTML = featured.map(p => {
+    const href = ensureTreePath(p.path);
+    return `
+      <article class="feature reveal tilt">
+        <div class="feature-top">
+          <p class="feature-k">Featured project</p>
+          <h3 class="feature-h">${p.title}</h3>
+          <p class="feature-p">${p.description || ""}</p>
+        </div>
+
+        <div class="feature-row">
+          ${tagHtml(p.tags)}
+        </div>
+
+        <div class="feature-actions">
+          <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See on GitHub</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function renderCollections(collections) {
+  const holder = document.getElementById("folders");
+  if (!holder) return;
+
+  holder.innerHTML = collections.map(col => {
+    const itemsHtml = (col.items || []).map(item => {
+      const href = ensureTreePath(item.path);
+      return `
+        <article class="card tilt">
+          <h3 class="h3">${item.title}</h3>
+          <p class="sub">${item.sub || ""}</p>
+
+          <div class="row">
+            ${tagHtml(item.tags)}
+            <a class="mini mag" href="${href}" target="_blank" rel="noreferrer">See on GitHub</a>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    return `
+      <details class="folder reveal" id="${col.id}">
+        <summary class="folder-head">
+          <div class="folder-left">
+            <span class="folder-icon" aria-hidden="true">${col.icon || "▢"}</span>
+            <div>
+              <p class="folder-title">${col.title}</p>
+              <p class="folder-sub">${col.subtitle || ""}</p>
+            </div>
+          </div>
+          <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
+        </summary>
+
+        <div class="folder-body">
+          <div class="cards">
+            ${itemsHtml}
+          </div>
+        </div>
+      </details>
+    `;
+  }).join("");
+}
+
+async function loadProjects() {
   try {
-    const res = await fetch(`./projects.json?v=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) throw new Error(`projects.json fetch failed: ${res.status}`);
+    const res = await fetch("./projects.json?v=6", { cache: "no-store" });
+    if (!res.ok) throw new Error(`projects.json not found (${res.status})`);
     const data = await res.json();
 
-    const githubUrl = data.githubPortfolioUrl || "https://github.com/ColtenHargett/portfolio";
+    if (data.featured) renderFeatured(data.featured);
+    if (data.collections) renderCollections(data.collections);
 
-    /* Featured */
-    if (featuredGrid) {
-      const featured = Array.isArray(data.featured) ? data.featured : [];
-      featuredGrid.innerHTML = "";
-
-      for (const p of featured) {
-        const title = escapeHtml(p.title || "Project");
-        const desc = escapeHtml(p.description || "");
-        const tags = Array.isArray(p.tags) ? p.tags : [];
-        const href = p.url || githubLink(githubUrl, p.path);
-
-        if (!p.url && !p.path) console.warn("[Featured missing path/url]", p);
-
-        const tagHtml = tags.slice(0, 6)
-          .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
-          .join("");
-
-        const card = document.createElement("article");
-        card.className = "feature reveal tilt";
-        card.innerHTML = `
-          <div class="feature-top">
-            <p class="feature-k">Featured project</p>
-            <h3 class="feature-h">${title}</h3>
-            <p class="feature-p">${desc}</p>
-          </div>
-
-          <div class="feature-row">
-            ${tagHtml}
-          </div>
-
-          <div class="feature-actions">
-            <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See writeup</a>
-          </div>
-        `;
-        featuredGrid.appendChild(card);
-      }
-    }
-
-    /* Work / Collections */
-    if (foldersRoot) {
-      const collections = Array.isArray(data.collections) ? data.collections : [];
-      foldersRoot.innerHTML = "";
-
-      for (const col of collections) {
-        const colId = escapeHtml(col.id || "");
-        const icon = escapeHtml(col.icon || "▢");
-        const title = escapeHtml(col.title || "Collection");
-        const subtitle = escapeHtml(col.subtitle || "");
-        const items = Array.isArray(col.items) ? col.items : [];
-
-        const details = document.createElement("details");
-        details.className = "folder reveal";
-        if (colId) details.id = colId;
-
-        const cardsHtml = items.map((item) => {
-          const itTitle = escapeHtml(item.title || "Project");
-          const itSub = escapeHtml(item.sub || "");
-          const itTags = Array.isArray(item.tags) ? item.tags : [];
-          const itHref = item.url || githubLink(githubUrl, item.path);
-
-          if (!item.url && !item.path) console.warn("[Item missing path/url]", item);
-
-          const tagsHtml = itTags.slice(0, 6)
-            .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
-            .join("");
-
-          return `
-            <article class="card tilt">
-              <h3 class="h3">${itTitle}</h3>
-              <p class="sub">${itSub}</p>
-              <div class="row">
-                ${tagsHtml}
-                <a class="mini mag" href="${itHref}" target="_blank" rel="noreferrer">See on GitHub</a>
-              </div>
-            </article>
-          `;
-        }).join("");
-
-        details.innerHTML = `
-          <summary class="folder-head">
-            <div class="folder-left">
-              <span class="folder-icon" aria-hidden="true">${icon}</span>
-              <div>
-                <p class="folder-title">${title}</p>
-                <p class="folder-sub">${subtitle}</p>
-              </div>
-            </div>
-            <span class="folder-meta" aria-hidden="true"><span class="chev">›</span></span>
-          </summary>
-
-          <div class="folder-body">
-            <div class="cards">
-              ${cardsHtml || `<p class="muted">No projects listed yet.</p>`}
-            </div>
-          </div>
-        `;
-
-        foldersRoot.appendChild(details);
-      }
-    }
-
-    // Re-run effects for injected DOM
+    // Re-hook effects after injecting DOM
     revealOnScroll();
     tiltCards();
     magneticButtons();
     magneticFolders();
-
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    // fail soft (don't break page)
+    console.warn("Failed to load projects.json:", e);
   }
 }
 
-/* -----------------------------
-   Living Code Canvas (Option 1)
------------------------------ */
-function codeCanvas() {
-  const canvas = document.getElementById("codeCanvas");
-  const shell = document.getElementById("codeShell");
-  if (!canvas || !shell) return;
-
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const ctx = canvas.getContext("2d", { alpha: true });
-  if (!ctx) return;
-
-  function resize() {
-    const r = canvas.getBoundingClientRect();
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    canvas.width = Math.floor(r.width * dpr);
-    canvas.height = Math.floor(r.height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  const lines = [
-    "def normalize(data):",
-    "return clean(data)",
-    "for symbol in market:",
-    "score = model(x)",
-    "if invalid: continue",
-    "parse → validate → emit",
-    "state = next(state)",
-    "O(n) scan, low memory",
-    "defensive by default",
-    "predictable outputs",
-    "agent.run(context)",
-    "summarize(changes)"
-  ];
-
-  const fragments = [];
-  const fragCount = reduce ? 0 : 22;
-
-  function rand(min, max) { return min + Math.random() * (max - min); }
-
-  function seed() {
-    fragments.length = 0;
-    if (reduce) return;
-
-    const r = canvas.getBoundingClientRect();
-    for (let i = 0; i < fragCount; i++) {
-      fragments.push({
-        text: lines[i % lines.length],
-        x: rand(40, r.width - 40),
-        y: rand(50, r.height - 50),
-        vx: rand(-0.12, 0.12),
-        vy: rand(-0.10, 0.10),
-        size: rand(11, 13.5),
-        alpha: rand(0.10, 0.22),
-        phase: rand(0, Math.PI * 2)
-      });
-    }
-  }
-
-  let mouse = { x: 0.5, y: 0.45, active: false };
-  let raf = 0;
-
-  shell.addEventListener("mousemove", (e) => {
-    mouse.active = true;
-    const r = shell.getBoundingClientRect();
-    mouse.x = clamp((e.clientX - r.left) / r.width, 0, 1);
-    mouse.y = clamp((e.clientY - r.top) / r.height, 0, 1);
-
-    const mx = mouse.x * 100;
-    const my = mouse.y * 100;
-    shell.style.setProperty("--mx", `${mx}%`);
-    shell.style.setProperty("--my", `${my}%`);
-  });
-
-  shell.addEventListener("mouseleave", () => {
-    mouse.active = false;
-    shell.style.removeProperty("--mx");
-    shell.style.removeProperty("--my");
-  });
-
-  function draw(t) {
-    raf = 0;
-    const r = canvas.getBoundingClientRect();
-    const w = r.width;
-    const h = r.height;
-
-    ctx.clearRect(0, 0, w, h);
-
-    // soft wash
-    const g = ctx.createRadialGradient(w * 0.35, h * 0.25, 20, w * 0.55, h * 0.60, Math.max(w, h) * 0.75);
-    g.addColorStop(0, "rgba(255,255,255,0.20)");
-    g.addColorStop(1, "rgba(255,255,255,0.00)");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, w, h);
-
-    if (reduce) return;
-
-    const scroll = window.scrollY || 0;
-    const scrollPhase = scroll * 0.0012;
-
-    ctx.save();
-    ctx.textBaseline = "middle";
-
-    for (let i = 0; i < fragments.length; i++) {
-      const f = fragments[i];
-
-      f.x += f.vx;
-      f.y += f.vy;
-
-      const breathe = Math.sin(t * 0.001 + f.phase + scrollPhase) * 0.6;
-
-      if (mouse.active) {
-        const tx = mouse.x * w;
-        const ty = mouse.y * h;
-        const dx = tx - f.x;
-        const dy = ty - f.y;
-        const dist = Math.max(40, Math.hypot(dx, dy));
-        const pull = 10 / dist;
-        f.x += dx * pull * 0.03;
-        f.y += dy * pull * 0.03;
-      }
-
-      if (f.x < -60) f.x = w + 60;
-      if (f.x > w + 60) f.x = -60;
-      if (f.y < -40) f.y = h + 40;
-      if (f.y > h + 40) f.y = -40;
-
-      const alpha = clamp(f.alpha + breathe * 0.03, 0.06, 0.28);
-      const useA = (i % 2) === 0;
-
-      ctx.font = `${f.size}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`;
-      ctx.fillStyle = useA
-        ? `rgba(109,94,252,${alpha})`
-        : `rgba(0,194,168,${alpha})`;
-
-      ctx.shadowColor = "rgba(0,0,0,0.10)";
-      ctx.shadowBlur = 6;
-
-      ctx.fillText(f.text, f.x, f.y);
-    }
-
-    ctx.restore();
-  }
-
-  function loop(t) {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      draw(t);
-      loop(t + 16);
-    });
-  }
-
-  resize();
-  seed();
-
-  if (!reduce) loop(performance.now());
-  else draw(performance.now());
-
-  window.addEventListener("resize", () => {
-    resize();
-    seed();
-  }, { passive: true });
-}
-
-/* -----------------------------
-   Boot
------------------------------ */
 document.addEventListener("DOMContentLoaded", () => {
   setYear();
   mobileMenu();
@@ -754,12 +505,11 @@ document.addEventListener("DOMContentLoaded", () => {
   headerBlur();
   parallaxHero();
   revealOnScroll();
-
-  // NEW lens (replaces orbMotion)
-  livingCodeLens();
-
   tiltCards();
   magneticButtons();
   magneticFolders();
   storyScroll();
+
+  livingCodeLens();
+  loadProjects();
 });
