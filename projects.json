@@ -46,25 +46,25 @@
           "path": "Python/Song Analyzer/"
         },
         {
-          "title": "Ascii Art Maker.py",
+          "title": "Ascii Art Maker",
           "sub": "Generate ASCII art output.",
           "tags": ["Python"],
           "path": "Python/Ascii Art Maker.py"
         },
         {
-          "title": "Dice Rolling Simulator.py",
+          "title": "Dice Rolling Simulator",
           "sub": "Simulate dice rolls and distributions.",
           "tags": ["Python", "Simulation"],
           "path": "Python/Dice Rolling Simulator.py"
         },
         {
-          "title": "Hangman.py",
+          "title": "Hangman",
           "sub": "CLI hangman game implementation.",
           "tags": ["Python", "Game"],
           "path": "Python/Hangman.py"
         },
         {
-          "title": "Rock,Paper,Scissors Rendition.py",
+          "title": "Rock,Paper,Scissors Rendition",
           "sub": "Medieval Clash (5-choice RPS variant).",
           "tags": ["Python", "Game"],
           "path": "Python/Rock,Paper,Scissors Rendition.py"
@@ -78,17 +78,29 @@
       "subtitle": "Coursework projects and exercises.",
       "items": [
         {
-          "title": "ATM Simulation.java",
+          "title": "ATM Simulation",
           "sub": "ATM simulation with input validation and state updates.",
           "tags": ["Java", "CLI"],
-          "path": "Java/Exercises/ATM Simulation.java"
+          "path": "Java/ATM Simulation.java"
         },
         {
-          "title": "Grocery List Maker.java",
+          "title": "Grocery List Maker",
           "sub": "Build and manage grocery lists via console interaction.",
           "tags": ["Java", "CLI"],
-          "path": "Java/Exercises/Grocery List Maker.java"
+          "path": "Java/Grocery List Maker.java"
         }
+        {
+          "title": "Personality Test",
+          "sub": "Personality test",
+          "tags": ["Java", "CLI"],
+          "path": "Java/Personality Test.java"
+        },
+        {
+          "title": "Exercises",
+          "sub": "Set of 8 simple exercises in Java",
+          "tags": ["Java", "CLI"],
+          "path": "Java/Exercises"
+        },
       ]
     },
     {
