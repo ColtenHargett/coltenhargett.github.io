@@ -398,7 +398,7 @@ async function loadProjects() {
 
       for (const col of collections) {
         const colId = escapeHtml(col.id || "");
-        const icon = escapeHtml(col.icon || "▢");
+        const icon = getIcon(col.icon || "ai");
         const title = escapeHtml(col.title || "Collection");
         const subtitle = escapeHtml(col.subtitle || "");
         const items = Array.isArray(col.items) ? col.items : [];
@@ -430,7 +430,38 @@ async function loadProjects() {
             </article>
           `;
         }).join("");
+function getIcon(name) {
+  if (name === "python") {
+    return `
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+        <path d="M12 2c4 0 4 2 4 2v4H8V6s0-4 4-4z" fill="#3776AB"/>
+        <circle cx="14.5" cy="5.5" r="1" fill="#fff"/>
+        <path d="M12 22c-4 0-4-2-4-2v-4h8v2s0 4-4 4z" fill="#FFD43B"/>
+        <circle cx="9.5" cy="18.5" r="1" fill="#000"/>
+      </svg>
+    `;
+  }
 
+  if (name === "java") {
+    return `
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="#ED8B00">
+        <path d="M12 2c2 2-2 3 0 5s4 2 2 5-4 2-2 4"/>
+        <path d="M6 18h12v2H6z"/>
+      </svg>
+    `;
+  }
+
+  if (name === "ai") {
+    return `
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M2 12h4M18 12h4M12 2v4M12 18v4"/>
+      </svg>
+    `;
+  }
+
+  return name;
+}
         details.innerHTML = `
           <summary class="folder-head">
             <div class="folder-left">
