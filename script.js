@@ -11,6 +11,119 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+function livingCodeLens() {
+  const lens = document.getElementById("lens");
+  const canvas = document.getElementById("lensCanvas");
+  if (!lens || !canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Code lines to render (short, readable, “you”)
+  const lines = [
+    "for symbol in market:",
+    "  raw = fetch(symbol)",
+    "  if invalid(raw): continue",
+    "  data = normalize(raw)",
+    "  signal = score(data)",
+    "  emit(symbol, signal)",
+    "",
+    "agent = build_pipeline()",
+    "news = scrape(sources)",
+    "summary = synthesize(news)",
+    "store(summary)"
+  ];
+
+  function resize() {
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const size = 520; // keep consistent with HTML attrs
+    canvas.width = Math.floor(size * dpr);
+    canvas.height = Math.floor(size * dpr);
+    canvas.style.width = `${size}px`;
+    canvas.style.height = `${size}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  // Motion state
+  let mx = 0.5, my = 0.5;     // cursor normalized
+  let drift = 0;              // scroll drift
+  let t = 0;                  // animation time
+
+  // Cursor “pull” (updates specular highlight too)
+  let rafMove = 0;
+  window.addEventListener("mousemove", (e) => {
+    if (rafMove) return;
+    rafMove = requestAnimationFrame(() => {
+      const r = lens.getBoundingClientRect();
+      mx = clamp((e.clientX - r.left) / r.width, 0, 1);
+      my = clamp((e.clientY - r.top) / r.height, 0, 1);
+
+      lens.style.setProperty("--lx", `${mx * 100}%`);
+      lens.style.setProperty("--ly", `${my * 100}%`);
+      rafMove = 0;
+    });
+  });
+
+  function draw() {
+    const W = 520, H = 520;
+    ctx.clearRect(0, 0, W, H);
+
+    // Subtle background veil so code is readable but not harsh
+    ctx.fillStyle = "rgba(255,255,255,0.42)";
+    ctx.fillRect(0, 0, W, H);
+
+    // Typography
+    ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+    ctx.textBaseline = "top";
+
+    // “pull” offsets: cursor + drift
+    const pullX = (mx - 0.5) * 22;
+    const pullY = (my - 0.5) * 22;
+
+    const baseX = 92 + pullX;
+    const baseY = 120 + pullY + drift;
+
+    // Draw with a tiny glow-like softness
+    for (let i = 0; i < lines.length; i++) {
+      const y = baseY + i * 18;
+      if (y < 60 || y > H - 60) continue;
+
+      // Alternate tint subtly (cool/warm) using your accent colors via rgba approximation
+      const tint = (i % 2 === 0)
+        ? "rgba(109,94,252,0.32)"
+        : "rgba(0,194,168,0.28)";
+
+      ctx.fillStyle = tint;
+      ctx.fillText(lines[i], baseX, y);
+    }
+
+    // Add a faint “scanline” to make it feel like a surface
+    ctx.fillStyle = "rgba(11,12,15,0.04)";
+    for (let y = 0; y < H; y += 4) {
+      ctx.fillRect(0, y, W, 1);
+    }
+  }
+
+  function tick() {
+    if (!reduce) {
+      t += 0.01;
+      // slow floating drift + scroll influence
+      const float = Math.sin(t) * 10;
+      const scroll = window.scrollY || 0;
+      drift = (scroll * 0.03) + float;
+    } else {
+      drift = 0;
+    }
+
+    draw();
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+}
 
 function isFilePath(p) {
   return /\.[a-z0-9]+$/i.test(String(p || "").trim());
@@ -641,10 +754,12 @@ document.addEventListener("DOMContentLoaded", () => {
   headerBlur();
   parallaxHero();
   revealOnScroll();
+
+  // NEW lens (replaces orbMotion)
+  livingCodeLens();
+
   tiltCards();
   magneticButtons();
   magneticFolders();
   storyScroll();
-  loadProjects();
-  codeCanvas();
 });
