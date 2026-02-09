@@ -25,6 +25,161 @@ function mobileMenu() {
     }
   });
 }
+function livingCodeLens(){
+  const canvas = document.getElementById("lensCanvas");
+  const lens = document.getElementById("lens");
+  if (!canvas || !lens) return;
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ctx = canvas.getContext("2d", { alpha: true });
+
+  // Code lines to loop (short lines look best)
+  const codeLines = [
+    "for symbol in market:",
+    "  raw = fetch(symbol)",
+    "  if invalid(raw): continue",
+    "  data = normalize(raw)",
+    "  signal = score(data)",
+    "  emit(symbol, signal)",
+    "",
+    "agent = build_pipeline()",
+    "news = scrape(sources)",
+    "summary = synthesize(news)",
+    "store(summary)",
+    "",
+    "validate() -> normalize() -> output()"
+  ];
+
+  // State
+  let w = 0, h = 0, dpr = 1;
+  let t0 = performance.now();
+  let scrollY = window.scrollY || 0;
+
+  // Cursor "pull"
+  let mx = 0.5, my = 0.35;   // 0..1
+  let vx = 0, vy = 0;
+
+  // Motion params
+  const lineH = 18;          // px (scaled with dpr later)
+  const driftSpeed = 22;     // px/sec baseline drift
+  const columns = 1;         // keep 1 column for Apple-like simplicity
+
+  function resize(){
+    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const r = lens.getBoundingClientRect();
+    w = Math.floor(r.width);
+    h = Math.floor(r.height);
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw(now){
+    const dt = Math.min(0.04, (now - t0) / 1000);
+    t0 = now;
+
+    // Ease cursor pull motion
+    const ax = (mx - 0.5) * 2;
+    const ay = (my - 0.5) * 2;
+    vx += ax * dt * 0.9;
+    vy += ay * dt * 0.9;
+    vx *= 0.92;
+    vy *= 0.92;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Soft gradient tint in the text itself (subtle)
+    const grad = ctx.createLinearGradient(0, 0, w, h);
+    grad.addColorStop(0, "rgba(109,94,252,.60)");
+    grad.addColorStop(1, "rgba(0,194,168,.52)");
+    ctx.fillStyle = grad;
+
+    // Text style
+    ctx.font = "12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace";
+    ctx.textBaseline = "top";
+
+    // Edge fade so it feels like it lives inside glass
+    // (we draw text normally, then apply a mask)
+    ctx.save();
+
+    // Compute drift offset (scroll adds a little extra “life”)
+    const drift = (now / 1000) * driftSpeed + (scrollY * 0.10);
+
+    // Warp intensity from cursor velocity
+    const warpX = vx * 22;
+    const warpY = vy * 16;
+
+    // Layout
+    const padding = 26;
+    const usableW = w - padding * 2;
+    const x0 = padding + warpX;
+
+    // Loop enough lines to fill + wrap
+    const totalLines = Math.ceil((h + 200) / lineH) + codeLines.length;
+    for (let i = 0; i < totalLines; i++){
+      const src = codeLines[i % codeLines.length];
+      const y = ((i * lineH) - (drift % (codeLines.length * lineH))) + padding + warpY;
+
+      // Skip if outside
+      if (y < -40 || y > h + 40) continue;
+
+      // Tiny horizontal wobble for “living” feel
+      const wobble = Math.sin((now / 1000) * 1.1 + i * 0.35) * 6;
+      const x = x0 + wobble;
+
+      // Draw clipped within lens bounds
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(padding, padding, usableW, h - padding * 2);
+      ctx.clip();
+
+      // Draw line
+      ctx.globalAlpha = 0.72;
+      ctx.fillText(src, x, y);
+
+      ctx.restore();
+    }
+
+    // Apply a circular fade mask (prevents “block” look)
+    ctx.globalCompositeOperation = "destination-in";
+    const mask = ctx.createRadialGradient(w/2, h/2, Math.min(w,h)*0.18, w/2, h/2, Math.min(w,h)*0.52);
+    mask.addColorStop(0, "rgba(0,0,0,1)");
+    mask.addColorStop(0.75, "rgba(0,0,0,.92)");
+    mask.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = mask;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.restore();
+
+    if (!reduce) requestAnimationFrame(draw);
+  }
+
+  // Mouse → lens sheen position + pull
+  function onMove(e){
+    const r = lens.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width;
+    const ny = (e.clientY - r.top) / r.height;
+    mx = clamp(nx, 0, 1);
+    my = clamp(ny, 0, 1);
+    lens.style.setProperty("--mx", `${mx * 100}%`);
+    lens.style.setProperty("--my", `${my * 100}%`);
+  }
+
+  lens.addEventListener("mousemove", onMove);
+  lens.addEventListener("mouseleave", () => {
+    mx = 0.5; my = 0.35;
+    lens.style.setProperty("--mx", `50%`);
+    lens.style.setProperty("--my", `35%`);
+  });
+
+  window.addEventListener("scroll", () => { scrollY = window.scrollY || 0; }, { passive: true });
+  window.addEventListener("resize", resize);
+
+  resize();
+  requestAnimationFrame(draw);
+}
 
 function spotlight() {
   const el = document.getElementById("spotlight");
@@ -509,7 +664,7 @@ document.addEventListener("DOMContentLoaded", () => {
   magneticButtons();
   magneticFolders();
   storyScroll();
-
+  livingCodeLens();
   livingCodeLens();
   loadProjects();
 });
