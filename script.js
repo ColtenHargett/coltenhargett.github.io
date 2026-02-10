@@ -432,35 +432,18 @@ async function loadProjects() {
         }).join("");
 function getIcon(name) {
   if (name === "python") {
-    return `
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-        <path d="M12 2c4 0 4 2 4 2v4H8V6s0-4 4-4z" fill="#3776AB"/>
-        <circle cx="14.5" cy="5.5" r="1" fill="#fff"/>
-        <path d="M12 22c-4 0-4-2-4-2v-4h8v2s0 4-4 4z" fill="#FFD43B"/>
-        <circle cx="9.5" cy="18.5" r="1" fill="#000"/>
-      </svg>
-    `;
+    return `<img src="./icons/python-icon.svg" alt="Python" />`;
   }
 
   if (name === "java") {
-    return `
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="#ED8B00">
-        <path d="M12 2c2 2-2 3 0 5s4 2 2 5-4 2-2 4"/>
-        <path d="M6 18h12v2H6z"/>
-      </svg>
-    `;
+    return `<img src="./icons/java-icon.svg" alt="Java" />`;
   }
 
   if (name === "ai") {
-    return `
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M2 12h4M18 12h4M12 2v4M12 18v4"/>
-      </svg>
-    `;
+    return `<img src="./icons/ai-icon.svg" alt="AI" />`;
   }
 
-  return name;
+  return "";
 }
         details.innerHTML = `
           <summary class="folder-head">
