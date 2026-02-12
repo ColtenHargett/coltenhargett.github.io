@@ -13,7 +13,7 @@
 
 /* Anchor offset for sticky header */
 :root{
-  --navH: 64px; /* adjust if your header is taller/shorter */
+  --navH: 58px; /* adjust if your header is taller/shorter */
   --anchorPad: 18px;
 }
 
