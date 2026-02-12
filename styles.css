@@ -11,6 +11,16 @@
   --b:#00c2a8;
 }
 
+/* Anchor offset for sticky header */
+:root{
+  --navH: 72px; /* adjust if your header is taller/shorter */
+  --anchorPad: 18px;
+}
+
+section[id]{
+  scroll-margin-top: calc(var(--navH) + var(--anchorPad));
+}
+
 *{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
 body{
