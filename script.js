@@ -16,6 +16,19 @@ function isFilePath(p) {
   return /\.[a-z0-9]+$/i.test(String(p || "").trim());
 }
 
+function anchorOffset() {
+  const header = document.getElementById("siteHeader");
+  if (!header) return;
+
+  const set = () => {
+    const h = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty("--navH", `${Math.ceil(h)}px`);
+  };
+
+  window.addEventListener("resize", set);
+  set();
+}
+
 function githubLink(repoUrl, path) {
   if (!repoUrl) return "#";
   const cleanRepo = repoUrl.replace(/\/$/, "");
@@ -689,6 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
   topProgress();
   headerBlur();
    emailCopyUX();
+   anchorOffset();
   parallaxHero();
   revealOnScroll();
   tiltCards();
