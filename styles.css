@@ -129,7 +129,10 @@ a:hover{ text-decoration:underline; }
   pointer-events:none;
 }
 
-.hero-grid{ display:grid; grid-template-columns: 1.15fr .85fr; gap:26px; align-items:start; position:relative; }
+.hero-grid{   display: grid;   grid-template-columns: 1fr;   gap: 0;   position: relative; }
+.hero-copy--solo{
+  max-width: 760px;
+}
 .kicker{ margin:0 0 10px; color: rgba(11,12,15,.55); letter-spacing:.22em; text-transform:uppercase; font-size:12px; }
 .h1{ margin:0 0 14px; font-size: clamp(40px, 5.8vw, 72px); line-height:1.01; letter-spacing:-0.035em; }
 .grad{
@@ -155,56 +158,6 @@ a:hover{ text-decoration:underline; }
 .meta{ margin-top:16px; color: rgba(11,12,15,.62); display:flex; gap:10px; flex-wrap:wrap; }
 .meta .dot{ width:4px;height:4px;border-radius:999px; background: rgba(11,12,15,.24); align-self:center; }
 .note{ margin-top: 16px; }
-
-/* Living Code Canvas (replaces orb) */
-.code-wrap{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-}
-.code-shell{
-  position:relative;
-  width: 380px;
-  aspect-ratio: 1/1;
-  border-radius: 999px;
-  overflow:hidden;
-  background:
-    radial-gradient(260px 220px at 30% 25%, rgba(255,255,255,.78), rgba(255,255,255,.0) 60%),
-    radial-gradient(340px 300px at 65% 70%, rgba(0,194,168,.10), transparent 60%),
-    radial-gradient(320px 320px at 40% 60%, rgba(109,94,252,.12), transparent 65%),
-    rgba(255,255,255,.55);
-  border: 1px solid rgba(11,12,15,.10);
-  box-shadow:
-    0 34px 120px rgba(0,0,0,.14),
-    inset 0 0 0 1px rgba(255,255,255,.55);
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-.code-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-}
-.code-glass{
-  position:absolute;
-  inset:-20%;
-  background:
-    radial-gradient(460px 380px at var(--mx, 30%) var(--my, 25%), rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(520px 520px at 60% 70%, rgba(109,94,252,.12), transparent 65%),
-    radial-gradient(560px 560px at 40% 60%, rgba(0,194,168,.10), transparent 65%);
-  filter: blur(10px);
-  opacity:.55;
-  pointer-events:none;
-  mix-blend-mode: screen;
-}
-.code-caption{
-  margin:0;
-  color: rgba(11,12,15,.55);
-  font-size: 13px;
-}
 
 /* Sections */
 .section{ padding: 60px 0; }
