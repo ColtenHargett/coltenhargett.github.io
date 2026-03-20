@@ -710,5 +710,4 @@ document.addEventListener("DOMContentLoaded", () => {
   magneticFolders();
   storyScroll();
   loadProjects();
-  codeCanvas();
 });
