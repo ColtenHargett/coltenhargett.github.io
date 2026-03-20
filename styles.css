@@ -171,7 +171,10 @@ a:hover{ text-decoration:underline; }
 .muted{ margin:0; color: var(--muted); }
 
 /* Featured */
-.featured{ padding-top: 18px; }
+.featured{
+  padding-top: 6px;
+  margin-top: -8px;
+}
 .featured-grid{
   display:grid;
   grid-template-columns: repeat(2, 1fr);
