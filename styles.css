@@ -183,10 +183,10 @@ a:hover{ text-decoration:underline; }
 .feature{
   border-radius: 26px;
   border:1px solid rgba(11,12,15,.10);
-  background: rgba(255,255,255,.74);
+  background: rgba(255,255,255,.78);
   backdrop-filter: blur(14px);
-  box-shadow: 0 18px 80px rgba(0,0,0,.10);
-  padding: 18px;
+  box-shadow: 0 20px 90px rgba(0,0,0,.11);
+  padding: 22px;
   position: relative;
   overflow:hidden;
   transform-style: preserve-3d;
