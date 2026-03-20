@@ -397,7 +397,7 @@ async function loadProjects() {
           </div>
 
           <div class="feature-actions">
-            <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">See writeup</a>
+            <a class="btn small mag" href="${href}" target="_blank" rel="noreferrer">View Project</a>
           </div>
         `;
         featuredGrid.appendChild(card);
