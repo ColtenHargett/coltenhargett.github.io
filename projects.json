@@ -104,7 +104,7 @@
       ]
     },
     {
-      "id": "collection-ai",
+      "id": "collection-ai-ml",
       "icon": "ai",
       "title": "AI and Machine Learning",
       "subtitle": "Modeling, forecasting, and applied intelligent systems.",
@@ -113,13 +113,13 @@
           "title": "News Summary Agent",
           "sub": "Agent-based pipeline for scraping, processing, and summarizing news.",
           "tags": ["AI", "Python", "LLM"],
-          "path": "AI/News Summary Agent/"
+          "path": "AI and Machine Learning/News Summary Agent/"
         },
         {
           "title": "Stock Market Predictor",
           "sub": "Forecasting system using historical similarity and backtesting.",
           "tags": ["Machine Learning", "Python", "Data"],
-          "path": "AI/Stock Market Predictor/"
+          "path": "AI and Machine Learning/Stock Market Predictor/"
         }
       ]
     }
