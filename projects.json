@@ -5,13 +5,13 @@
       "title": "Stock Market Predictor",
       "description": "Similarity-based forecasting system using engineered features and backtesting to predict next-day highs.",
       "tags": ["Machine Learning", "Python", "Data"],
-      "path": "AI/Stock Market Predictor/"
+      "path": "AI and Machine Learning/Stock Market Predictor/"
     },
     {
       "title": "News Summary Agent",
       "description": "Agent-based pipeline that scrapes, processes, and summarizes news data.",
       "tags": ["AI", "Python", "Automation", "LLM"],
-      "path": "AI/News Summary Agent/"
+      "path": "AI and Machine Learning/News Summary Agent/"
     }
   ],
   "collections": [
@@ -19,53 +19,53 @@
       "id": "collection-python",
       "icon": "python",
       "title": "Python",
-      "subtitle": "Scripts, analyzers, and small tools.",
+      "subtitle": "Data processing, scripting, and small tools.",
       "items": [
         {
           "title": "Morse Code Translator",
-          "sub": "Encode/decode text to Morse code.",
+          "sub": "Convert text to and from Morse code.",
           "tags": ["Python"],
           "path": "Python/Morse Code Translator/"
         },
         {
           "title": "Movie Analyzer",
-          "sub": "Analyze movie datasets / text output.",
+          "sub": "Analyze movie data and generate structured output.",
           "tags": ["Python", "Parsing"],
           "path": "Python/Movie Analyzer/"
         },
         {
           "title": "Restaurant Analyzer",
-          "sub": "Parse and analyze restaurant data.",
+          "sub": "Parse and analyze restaurant data from files.",
           "tags": ["Python", "Data"],
           "path": "Python/Restaurant Analyzer/"
         },
         {
           "title": "Song Analyzer",
-          "sub": "Analyze song/artist datasets with custom functions.",
+          "sub": "Process song and artist data using custom functions.",
           "tags": ["Python", "Files"],
           "path": "Python/Song Analyzer/"
         },
         {
           "title": "Ascii Art Maker",
-          "sub": "Generate ASCII art output.",
+          "sub": "Generate ASCII art from text input.",
           "tags": ["Python"],
           "path": "Python/Ascii Art Maker.py"
         },
         {
           "title": "Dice Rolling Simulator",
-          "sub": "Simulate dice rolls and distributions.",
+          "sub": "Simulate dice rolls and visualize distributions.",
           "tags": ["Python", "Simulation"],
           "path": "Python/Dice Rolling Simulator.py"
         },
         {
           "title": "Hangman",
-          "sub": "CLI hangman game implementation.",
+          "sub": "Command-line hangman game with input validation.",
           "tags": ["Python", "Game"],
           "path": "Python/Hangman.py"
         },
         {
           "title": "Rock,Paper,Scissors Rendition",
-          "sub": "Medieval Clash (5-choice RPS variant).",
+          "sub": "Five-choice strategy game with custom rules.",
           "tags": ["Python", "Game"],
           "path": "Python/Rock,Paper,Scissors Rendition.py"
         }
@@ -75,29 +75,29 @@
       "id": "collection-java",
       "icon": "java",
       "title": "Java",
-      "subtitle": "Coursework projects and exercises.",
+      "subtitle": "Core concepts, problem solving, and coursework.",
       "items": [
         {
           "title": "ATM Simulation",
-          "sub": "ATM simulation with input validation and state updates.",
+          "sub": "Simulate ATM operations with account state and validation.",
           "tags": ["Java", "CLI"],
           "path": "Java/ATM Simulation.java"
         },
         {
           "title": "Grocery List Maker",
-          "sub": "Build and manage grocery lists via console interaction.",
+          "sub": "Create and manage grocery lists through the console.",
           "tags": ["Java", "CLI"],
           "path": "Java/Grocery List Maker.java"
         },
         {
           "title": "Personality Test",
-          "sub": "Interactive personality test in the terminal.",
+          "sub": "Interactive command-line personality quiz.",
           "tags": ["Java", "CLI"],
           "path": "Java/Personality Test.java"
         },
         {
           "title": "Exercises",
-          "sub": "Set of 8 simple exercises in Java.",
+          "sub": "Collection of small Java exercises and practice problems.",
           "tags": ["Java", "CLI"],
           "path": "Java/Exercises"
         }
@@ -111,13 +111,13 @@
       "items": [
         {
           "title": "News Summary Agent",
-          "sub": "Agent-based pipeline for scraping, processing, and summarizing news.",
+          "sub": "Pipeline that collects news and generates AI summaries.",
           "tags": ["AI", "Python", "LLM"],
           "path": "AI and Machine Learning/News Summary Agent/"
         },
         {
           "title": "Stock Market Predictor",
-          "sub": "Forecasting system using historical similarity and backtesting.",
+          "sub": "Predicts next-day highs using historical pattern matching.",
           "tags": ["Machine Learning", "Python", "Data"],
           "path": "AI and Machine Learning/Stock Market Predictor/"
         }
