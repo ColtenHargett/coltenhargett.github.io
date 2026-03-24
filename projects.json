@@ -3,14 +3,14 @@
   "featured": [
     {
       "title": "Stock Market Predictor",
-      "description": "Forecasts next-day stock highs using historical pattern matching, engineered features, and backtested evaluation.",
-      "tags": ["Machine Learning", "Python", "Data"],
+      "description": "Uses historical market patterns and engineered features to estimate next-day stock highs, then tests the results through backtesting.",
+      "tags": ["Machine Learning", "Python", "Forecasting"],
       "path": "AI and Machine Learning/Stock Market Predictor/"
     },
     {
       "title": "News Summary Agent",
-      "description": "Automated pipeline that collects news and generates concise summaries using an AI-driven workflow.",
-      "tags": ["AI", "Python", "Automation", "LLM"],
+      "description": "Collects news automatically and turns it into short, readable summaries through an AI-based workflow.",
+      "tags": ["AI", "Python", "Automation"],
       "path": "AI and Machine Learning/News Summary Agent/"
     }
   ],
@@ -19,53 +19,53 @@
       "id": "collection-python",
       "icon": "python",
       "title": "Python",
-      "subtitle": "Data processing, scripting, and small tools.",
+      "subtitle": "Scripts, data work, and smaller tools.",
       "items": [
         {
           "title": "Morse Code Translator",
-          "sub": "Convert text to and from Morse code.",
+          "sub": "Converts text to and from Morse code.",
           "tags": ["Python"],
           "path": "Python/Morse Code Translator/"
         },
         {
           "title": "Movie Analyzer",
-          "sub": "Analyze movie data and generate structured output.",
-          "tags": ["Python", "Parsing"],
+          "sub": "Works through movie data and produces structured output.",
+          "tags": ["Python", "Data"],
           "path": "Python/Movie Analyzer/"
         },
         {
           "title": "Restaurant Analyzer",
-          "sub": "Parse and analyze restaurant data from files.",
+          "sub": "Reads restaurant data from files and analyzes it.",
           "tags": ["Python", "Data"],
           "path": "Python/Restaurant Analyzer/"
         },
         {
           "title": "Song Analyzer",
-          "sub": "Process song and artist data using custom functions.",
+          "sub": "Processes song and artist data with custom functions.",
           "tags": ["Python", "Files"],
           "path": "Python/Song Analyzer/"
         },
         {
           "title": "Ascii Art Maker",
-          "sub": "Generate ASCII art from text input.",
+          "sub": "Generates ASCII art from text input.",
           "tags": ["Python"],
           "path": "Python/Ascii Art Maker.py"
         },
         {
           "title": "Dice Rolling Simulator",
-          "sub": "Simulate dice rolls and visualize distributions.",
+          "sub": "Simulates dice rolls and shows how the outcomes are distributed.",
           "tags": ["Python", "Simulation"],
           "path": "Python/Dice Rolling Simulator.py"
         },
         {
           "title": "Hangman",
-          "sub": "Command-line hangman game with input validation.",
+          "sub": "Command-line hangman game with validation built in.",
           "tags": ["Python", "Game"],
           "path": "Python/Hangman.py"
         },
         {
           "title": "Rock,Paper,Scissors Rendition",
-          "sub": "Five-choice strategy game with custom rules.",
+          "sub": "Five-choice strategy game with custom rules and outcomes.",
           "tags": ["Python", "Game"],
           "path": "Python/Rock,Paper,Scissors Rendition.py"
         }
@@ -75,30 +75,30 @@
       "id": "collection-java",
       "icon": "java",
       "title": "Java",
-      "subtitle": "Core concepts, problem solving, and coursework.",
+      "subtitle": "Course projects, problem solving, and core concepts.",
       "items": [
         {
           "title": "ATM Simulation",
-          "sub": "Simulate ATM operations with account state and validation.",
+          "sub": "Simulates ATM actions with account updates and input checking.",
           "tags": ["Java", "CLI"],
           "path": "Java/ATM Simulation.java"
         },
         {
           "title": "Grocery List Maker",
-          "sub": "Create and manage grocery lists through the console.",
+          "sub": "Lets users build and manage grocery lists in the console.",
           "tags": ["Java", "CLI"],
           "path": "Java/Grocery List Maker.java"
         },
         {
           "title": "Personality Test",
-          "sub": "Interactive command-line personality quiz.",
+          "sub": "Interactive personality quiz built for the command line.",
           "tags": ["Java", "CLI"],
           "path": "Java/Personality Test.java"
         },
         {
           "title": "Exercises",
-          "sub": "Collection of small Java exercises and practice problems.",
-          "tags": ["Java", "CLI"],
+          "sub": "Set of smaller Java exercises focused on practice and fundamentals.",
+          "tags": ["Java"],
           "path": "Java/Exercises"
         }
       ]
@@ -107,18 +107,18 @@
       "id": "collection-ai-ml",
       "icon": "ai",
       "title": "AI and Machine Learning",
-      "subtitle": "Modeling, forecasting, and applied intelligent systems.",
+      "subtitle": "Prediction, automation, and practical intelligent systems.",
       "items": [
         {
           "title": "News Summary Agent",
-          "sub": "Pipeline that collects news and generates AI summaries.",
-          "tags": ["AI", "Python", "LLM"],
+          "sub": "Pulls in news and turns it into short AI-generated summaries.",
+          "tags": ["AI", "Python", "Automation"],
           "path": "AI and Machine Learning/News Summary Agent/"
         },
         {
           "title": "Stock Market Predictor",
-          "sub": "Predicts next-day highs using historical pattern matching.",
-          "tags": ["Machine Learning", "Python", "Data"],
+          "sub": "Estimates next-day highs by comparing current market behavior to similar past patterns.",
+          "tags": ["Machine Learning", "Python", "Forecasting"],
           "path": "AI and Machine Learning/Stock Market Predictor/"
         }
       ]
