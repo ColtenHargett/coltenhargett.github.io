@@ -3,13 +3,13 @@
   "featured": [
     {
       "title": "Stock Market Predictor",
-      "description": "Similarity-based forecasting system using engineered features and backtesting to predict next-day highs.",
+      "description": "Forecasts next-day stock highs using historical pattern matching, engineered features, and backtested evaluation.",
       "tags": ["Machine Learning", "Python", "Data"],
       "path": "AI and Machine Learning/Stock Market Predictor/"
     },
     {
       "title": "News Summary Agent",
-      "description": "Agent-based pipeline that scrapes, processes, and summarizes news data.",
+      "description": "Automated pipeline that collects news and generates concise summaries using an AI-driven workflow.",
       "tags": ["AI", "Python", "Automation", "LLM"],
       "path": "AI and Machine Learning/News Summary Agent/"
     }
