@@ -1,233 +1,64 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light" />
-  <title>Colten Hargett</title>
-  <meta name="description" content="Colten Hargett portfolio featuring programming, AI and machine learning, and data-focused projects." />
-  <script>
-    document.documentElement.classList.add('js');
-  </script>
-  <link rel="stylesheet" href="./styles.css?v=6" />
-</head>
+<!-- APPROACH -->
+<section class="section soft" id="approach">
+  <div class="wrap">
+    <header class="head reveal">
+      <h2 class="h2">APPROACH</h2>
+      <p class="muted">How I think about building software.</p>
+    </header>
 
-<body>
-  <a class="skip" href="#main">Skip to content</a>
+    <div class="story-shell">
+      <div class="story-left">
+        <div class="progress">
+          <span class="progress-bar" id="progressBar"></span>
+        </div>
 
-  <div class="top-progress" aria-hidden="true">
-    <span class="top-progress-bar" id="topProgress"></span>
-  </div>
+        <div class="story-stage reveal" id="storyStage">
+          <div class="stage-card">
+            <p class="stage-kicker" id="stageKicker">Clarity</p>
+            <p class="stage-title" id="stageTitle">Code should make sense.</p>
+            <p class="stage-body" id="stageBody">
+              I focus on structure and readability so the logic is easy to follow.
+            </p>
+          </div>
+          <div class="stage-glow" aria-hidden="true"></div>
+        </div>
+      </div>
 
-  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+      <div class="story-right" id="storySteps">
 
-  <header class="nav" id="siteHeader">
-    <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="Home">
-        <span class="brand-dot" aria-hidden="true"></span>
-        <span class="brand-text">Colten Hargett</span>
-      </a>
+        <article class="step reveal"
+          data-kicker="Clarity"
+          data-title="Code should make sense."
+          data-body="I focus on structure and readability so the logic is easy to follow.">
+          <h3>Clarity</h3>
+          <p>I try to build things that are simple to read and easy to work with.</p>
+        </article>
 
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#featured">Featured</a>
-        <a href="#work">Work</a>
-        <a href="#approach">Approach</a>
-        <a class="pill" href="#contact">Contact</a>
-      </nav>
+        <article class="step reveal"
+          data-kicker="Reliability"
+          data-title="It should hold up."
+          data-body="I handle edge cases and validation so things work even when inputs are messy.">
+          <h3>Reliability</h3>
+          <p>I want my code to stay dependable in real situations.</p>
+        </article>
 
-      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu">
-        Menu
-      </button>
-    </div>
+        <article class="step reveal"
+          data-kicker="Detail"
+          data-title="The small things matter."
+          data-body="Naming, spacing, and edge cases are what make a project feel complete.">
+          <h3>Attention to detail</h3>
+          <p>I pay attention to the details that make things feel intentional.</p>
+        </article>
 
-    <div class="mobile" id="mobileMenu" hidden>
-      <div class="wrap mobile-inner">
-        <a href="#featured" class="m-link">Featured</a>
-        <a href="#work" class="m-link">Work</a>
-        <a href="#approach" class="m-link">Approach</a>
-        <a href="#contact" class="m-link m-pill">Contact</a>
+        <article class="step reveal"
+          data-kicker="AI and ML"
+          data-title="Use it when it helps."
+          data-body="I focus on using AI and machine learning where it actually improves results.">
+          <h3>AI and machine learning</h3>
+          <p>I care more about usefulness than hype.</p>
+        </article>
+
       </div>
     </div>
-  </header>
-
-  <main id="main">
-    <!-- HERO -->
-<section class="hero" id="top">
-  <div class="wrap hero-grid">
-    
-    <!-- LEFT SIDE (original style, improved tone) -->
-    <div class="hero-copy">
-      <p class="kicker reveal">Portfolio</p>
-
-      <h1 class="h1 reveal">
-        Building software that is
-        <span class="grad">clear, useful, and built to last.</span>
-      </h1>
-
-      <p class="lead reveal">
-        I work on programming, AI and machine learning, and automation projects that focus on solving real problems and holding up in practice.
-      </p>
-
-      <div class="actions reveal">
-        <a class="btn mag" href="#featured">View projects</a>
-        <a class="btn ghost mag" href="#contact">Contact me</a>
-      </div>
-    </div>
-
-    <!-- RIGHT SIDE (your improved panel) -->
-    <aside class="hero-panel reveal" aria-label="Current focus">
-      <div class="hero-panel-card">
-        <p class="hero-panel-label">Current Focus</p>
-
-        <h2 class="hero-panel-title">
-          Building practical systems that solve real problems.
-        </h2>
-
-        <ul class="hero-points">
-          <li>AI and machine learning</li>
-          <li>Forecasting and data tools</li>
-          <li>Automation workflows</li>
-          <li>Clean front-end presentation</li>
-        </ul>
-      </div>
-    </aside>
-
   </div>
 </section>
-
-    <!-- FEATURED -->
-    <section class="section featured" id="featured" aria-label="Featured projects">
-      <div class="wrap">
-        <header class="head reveal">
-          <h2 class="h2">FEATURED PROJECTS</h2>
-          <p class="muted">A few projects that best show how I build.</p>
-        </header>
-
-        <div class="featured-grid" id="featuredGrid"></div>
-      </div>
-    </section>
-
-    <!-- WORK -->
-    <section class="section" id="work" aria-label="Project collections">
-      <div class="wrap">
-        <header class="head reveal">
-          <h2 class="h2">WORK</h2>
-          <p class="muted">Projects organized by language and focus.</p>
-        </header>
-
-        <div class="folders" id="foldersRoot"></div>
-      </div>
-    </section>
-
-    <!-- APPROACH -->
-    <section class="section soft" id="approach">
-      <div class="wrap">
-        <header class="head reveal">
-          <h2 class="h2">APPROACH</h2>
-          <p class="muted">How I think about building software.</p>
-        </header>
-
-        <div class="story-shell">
-          <div class="story-left">
-            <div class="progress">
-              <span class="progress-bar" id="progressBar"></span>
-            </div>
-
-            <div class="story-stage reveal" id="storyStage">
-              <div class="stage-card">
-                <p class="stage-kicker" id="stageKicker">Clarity</p>
-                <p class="stage-title" id="stageTitle">Code should make sense.</p>
-                <p class="stage-body" id="stageBody">
-                  I want my code to be easy to follow. Clear structure, readable logic, and fewer unnecessary complications usually make everything better.
-                </p>
-              </div>
-              <div class="stage-glow" aria-hidden="true"></div>
-            </div>
-          </div>
-
-          <div class="story-right" id="storySteps">
-            <article class="step reveal"
-              data-kicker="Clarity"
-              data-title="Code should make sense."
-              data-body="I want my code to be easy to follow. Clear structure, readable logic, and fewer unnecessary complications usually make everything better.">
-              <h3>Clarity</h3>
-              <p>I care about building things that are easy to read, easy to debug, and not harder than they need to be.</p>
-            </article>
-
-            <article class="step reveal"
-              data-kicker="Reliability"
-              data-title="It should hold up in practice."
-              data-body="Real inputs are messy, so I try to build around that. I care about validation, edge cases, and making sure things break in ways that are understandable.">
-              <h3>Reliability</h3>
-              <p>I want my projects to keep working even when the input is not ideal.</p>
-            </article>
-
-            <article class="step reveal"
-              data-kicker="Detail"
-              data-title="The small decisions matter."
-              data-body="Naming, spacing, behavior, and edge-case handling are usually what separate a finished project from an almost-finished one.">
-              <h3>Attention to detail</h3>
-              <p>I care about the details that make a project feel intentional.</p>
-            </article>
-
-            <article class="step reveal"
-              data-kicker="AI and ML"
-              data-title="Use it when it actually helps."
-              data-body="What interests me most about AI and machine learning is when they improve the experience of using something, whether that means better predictions, better organization, or less friction.">
-              <h3>AI and machine learning</h3>
-              <p>I am less interested in hype and more interested in building systems that are useful and measurable.</p>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="wrap">
-        <header class="head reveal">
-          <h2 class="h2">CONTACT</h2>
-          <p class="muted">The best ways to reach me.</p>
-        </header>
-
-        <div class="contact reveal">
-          <a 
-            class="c-card mag email-copy" 
-            href="mailto:coltenhargett@gmail.com"
-            data-copy="coltenhargett@gmail.com"
-          >
-            <div>
-              <p class="label">Email</p>
-              <p class="value">coltenhargett@gmail.com</p>
-            </div>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-
-          <a class="c-card mag" href="https://www.linkedin.com/in/colten-hargett" target="_blank" rel="noreferrer">
-            <div>
-              <p class="label">LinkedIn</p>
-              <p class="value">colten-hargett</p>
-            </div>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-
-          <a class="c-card mag" href="./resume.pdf" target="_blank" rel="noreferrer">
-            <div>
-              <p class="label">Resume</p>
-              <p class="value">resume.pdf</p>
-            </div>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-
-        <footer class="footer">
-          <p class="muted small">© <span id="year"></span> Colten Hargett</p>
-          <a class="muted small" href="#top">Back to top</a>
-        </footer>
-      </div>
-    </section>
-  </main>
-
-  <script src="./script.js?v=6" defer></script>
-</body>
-</html>
